@@ -27,13 +27,20 @@ class GabbleService(private val gabbleRepository: GabbleRepository) {
                 text = text,
                 createdById = createdById,
                 createdOn = LocalDateTime.now(),
-                tags = mutableSetOf(),
+                tags = getTagsFromText(text),
                 likedBy = mutableSetOf(),
                 mentions = mutableSetOf()
         )
 
         return gabbleRepository.save(gabble)
     }
+
+    private fun getTagsFromText(text: String) = text
+            .split(" ")
+            .asSequence()
+            .filter { it.startsWith("#") }
+            .map { it.drop(1) }
+            .toMutableSet()
 
     fun addLikeToGabble(gabbleId: String, userId: String) {
         val gabble = gabbleRepository

@@ -12,6 +12,7 @@ import io.kotlintest.shouldBe
 import io.restassured.RestAssured
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
@@ -56,6 +57,10 @@ private class GabbleControllerIT {
     fun setup() {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
+    }
+
+    @BeforeEach
+    fun setupBeforeEach(){
 
         gabbleRepository.deleteAll()
 
@@ -92,6 +97,25 @@ private class GabbleControllerIT {
                 .body("id", notNullValue())
                 .body("text", equalTo(text))
                 .body("createdById", equalTo(userId))
+                .body("tags.size()", equalTo(0))
+    }
+
+    @Test
+    fun `create new gabble - success with tags`() {
+        val userId = "00ugl9afjiwNub6yt0h8"
+        val text = "new gabble text with #tag1 and #tag2"
+        val newGabble = GabbleCreateDto(text = text, createdById = userId)
+        val newGabbleJson = jsonMapper.writeValueAsString(newGabble)
+
+        val request = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body(newGabbleJson)
+
+        request.post(GabbleController.BASE_URL)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("tags", containsInAnyOrder("tag1", "tag2"))
     }
 
     @Test

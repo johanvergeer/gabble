@@ -13,7 +13,7 @@ data class Gabble(
         val createdOn: LocalDateTime? = null,
         val tags: MutableSet<String> = mutableSetOf(),
         val likedBy: MutableSet<String> = mutableSetOf(),
-        val mentions: MutableSet<Long> = mutableSetOf()
+        val mentions: MutableSet<String> = mutableSetOf()
 )
 
 data class GabbleCreateDto(
