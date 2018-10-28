@@ -3,16 +3,25 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: gabble
+#      database: gabble
   application:
     name: gabbles-service
 security:
   oauth2:
     client:
-#      client-id: 0oah02ykwu2GWXRcU0h7
+      #      client-id: 0oah02ykwu2GWXRcU0h7
       client-secret: SCDMxLe4Dl04PkGwGj-OZTbn7OyqC7rR47JFinrU
       access-token-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/token
       user-authorization-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/authorize
       scope: openid profile email
     resource:
       user-info-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/userinfo
+server:
+  port: 8080
+
+---
+spring:
+  profiles: test
+  data:
+    mongodb:
+      database: gabble-test

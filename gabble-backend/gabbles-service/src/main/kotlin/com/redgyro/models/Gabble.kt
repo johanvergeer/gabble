@@ -9,9 +9,9 @@ import java.time.LocalDateTime
 data class Gabble(
         @Id val id: String = "",
         val text: String = "",
-        val createdById: Long = 0,
+        val createdById: String = "",
         val createdOn: LocalDateTime? = null,
-        val tags: Set<String> = setOf(),
-        val likedBy: Set<Long> = setOf(),
-        val mentions: Set<Long> = setOf()
+        val tags: MutableSet<String> = mutableSetOf(),
+        val likedBy: MutableSet<String> = mutableSetOf(),
+        val mentions: MutableSet<Long> = mutableSetOf()
 )

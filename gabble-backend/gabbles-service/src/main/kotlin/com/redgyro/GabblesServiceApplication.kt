@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.util.*
@@ -37,15 +38,16 @@ fun main(args: Array<String>) {
 fun randomUUIDAsString() = UUID.randomUUID().toString()
 
 @Component
+@Profile("dev")
 class StartupCommandLineRunner(private val gabbleRepository: GabbleRepository) : CommandLineRunner {
     companion object {
         val logger: Logger = LoggerFactory.getLogger(StartupCommandLineRunner::class.java)
 
-        val GABBLE_1 = Gabble(id = randomUUIDAsString(), text = "Gabble 1 text", createdById = 1, createdOn = LocalDateTime.now())
-        val GABBLE_2 = Gabble(id = randomUUIDAsString(), text = "Gabble 2 text", createdById = 1, createdOn = LocalDateTime.now())
-        val GABBLE_3 = Gabble(id = randomUUIDAsString(), text = "Gabble 3 text", createdById = 1, createdOn = LocalDateTime.now())
-        val GABBLE_4 = Gabble(id = randomUUIDAsString(), text = "Gabble 4 text", createdById = 1, createdOn = LocalDateTime.now())
-        val GABBLE_5 = Gabble(id = randomUUIDAsString(), text = "Gabble 5 text", createdById = 1, createdOn = LocalDateTime.now())
+        val GABBLE_1 = Gabble(id = randomUUIDAsString(), text = "Gabble 1 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
+        val GABBLE_2 = Gabble(id = randomUUIDAsString(), text = "Gabble 2 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
+        val GABBLE_3 = Gabble(id = randomUUIDAsString(), text = "Gabble 3 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
+        val GABBLE_4 = Gabble(id = randomUUIDAsString(), text = "Gabble 4 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
+        val GABBLE_5 = Gabble(id = randomUUIDAsString(), text = "Gabble 5 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
     }
 
     override fun run(vararg args: String?) {

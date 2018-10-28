@@ -38,7 +38,8 @@ dependencies {
     testCompile("io.kotlintest:kotlintest-runner-junit5:3.1.10")
     testCompile("io.kotlintest:kotlintest-extensions-spring:3.1.10")
     testCompile("org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE")
-    testCompile("com.github.fakemongo:fongo:2.2.0-RC1")
+    testCompile("io.rest-assured:rest-assured:3.2.0")
+    testCompile("org.hamcrest:hamcrest-all:1.3")
 }
 
 val test by tasks.getting(Test::class) {

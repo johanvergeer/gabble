@@ -1,5 +1,7 @@
 package com.redgyro
 
+import feign.RequestInterceptor
+import feign.RequestTemplate
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso
 import org.springframework.boot.builder.SpringApplicationBuilder
@@ -9,22 +11,19 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.cloud.openfeign.FeignClient
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails
+import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
-import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher
-import org.springframework.security.authorization.AuthenticatedReactiveAuthorizationManager.authenticated
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails
-import org.springframework.security.core.context.SecurityContextHolder
-import feign.RequestInterceptor
-import feign.RequestTemplate
-import org.springframework.context.annotation.Bean
 
 
 @EnableFeignClients
