@@ -2,7 +2,7 @@
 Application | Port(s)
 --- | ---
 Eureka naming server | 8761
-Zuul API gateway server | 8765
+Edge service | 8765
 Spring cloud config server | 8888
 
 # Sources

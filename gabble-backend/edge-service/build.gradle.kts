@@ -6,7 +6,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.spring") version "1.2.71"
 }
 
-val h2Version: String by parent!!.project
 val springBootVersion: String by parent!!.project
 val springCloudVersion: String by parent!!.project
 
@@ -17,10 +16,16 @@ fun DependencyHandlerScope.springBootStarter(module: String) = this.springBoot("
 dependencies {
     springBoot("devtools")
     springBootStarter("actuator")
-    springBootStarter("tomcat") // Added because of issues with starter-netflix-eureka-server
+    springBootStarter("tomcat")
+//    springBootStarter("security")
 
-//    springCloud("config-client")
-    springCloud("starter-netflix-eureka-server")
+    springCloud("config-client")
+    springCloud("starter-netflix-eureka-client")
+    springCloud("starter-netflix-hystrix")
+    springCloud("starter-netflix-zuul")
+    springCloud("starter-openfeign")
+    springCloud("starter-sleuth")
 
-    compile("com.google.code.gson:gson:2.8.5") // Added because of issues with starter-netflix-eureka-server
+    compile("com.google.code.gson:gson:2.8.5") // Added because of issues with starter-netflix-eureka-client
+    compile("io.jsonwebtoken:jjwt:0.9.1")
 }

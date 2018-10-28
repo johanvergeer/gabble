@@ -23,7 +23,7 @@ dependencies {
     springBootStarter("web")
 
 //    springCloud("config-client")
-//    springCloud("starter-netflix-eureka-client")
+    springCloud("starter-netflix-eureka-client")
 //    springCloud("starter-netflix-zuul")
 //    springCloud("starter-sleuth")
 

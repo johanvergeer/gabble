@@ -14,5 +14,4 @@ data class Gabble(
         val tags: Set<String> = setOf(),
         val likedBy: Set<Long> = setOf(),
         val mentions: Set<Long> = setOf()
-) {
-}
+)

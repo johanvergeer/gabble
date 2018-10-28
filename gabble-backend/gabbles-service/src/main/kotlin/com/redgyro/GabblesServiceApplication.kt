@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.util.*
 
 @SpringBootApplication
+@EnableDiscoveryClient
 class GabblesServiceApplication
 
 fun main(args: Array<String>) {

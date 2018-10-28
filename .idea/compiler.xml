@@ -6,6 +6,8 @@
       <module name="auth-service_test" target="1.8" />
       <module name="gabble_main" target="1.8" />
       <module name="gabble_test" target="1.8" />
+      <module name="zuul-api-gateway-server_main" target="1.8" />
+      <module name="zuul-api-gateway-server_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
