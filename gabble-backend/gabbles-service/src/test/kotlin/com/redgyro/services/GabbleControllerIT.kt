@@ -9,6 +9,7 @@ import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.shouldBe
 import io.restassured.RestAssured
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -52,6 +53,8 @@ private class GabbleControllerIT {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
 
+        gabbleRepository.deleteAll()
+
         gabbleRepository.save(GABBLE_1)
         gabbleRepository.save(GABBLE_2)
         gabbleRepository.save(GABBLE_3)
@@ -75,5 +78,25 @@ private class GabbleControllerIT {
         val likes = updatedGabble.likedBy
         likes.shouldHaveSize(1)
         likes.first() shouldBe "00ugl9afjiwNub6yt0h8"
+    }
+
+    @Test
+    fun `add like to gabble - gabble not found`() {
+        val gabbleId = randomUUIDAsString()
+
+        RestAssured.post("${GabbleController.BASE_URL}/$gabbleId/likes/00ugl9afjiwNub6yt0h8")
+                .then()
+                .assertThat()
+                .statusCode(404) // Not found
+                .body("message", equalTo("Gabble with id $gabbleId not found"))
+    }
+
+    @Test
+    fun `add like to gabble - cannot like own gabble`() {
+        RestAssured.post("${GabbleController.BASE_URL}/${GABBLE_1.id}/likes/${GABBLE_1.createdById}")
+                .then()
+                .assertThat()
+                .statusCode(406) // Not found
+                .body("message", equalTo("User cannot like own Gabble"))
     }
 }
