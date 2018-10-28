@@ -6,7 +6,13 @@ spring:
       database: gabble
   application:
     name: gabbles-service
-#spring.data.mongodb.authentication-database=[authentication_database]
-#spring.data.mongodb.username=[username]
-#spring.data.mongodb.password=[password]
-#spring.data.mongodb.database=rest_tutorial
+security:
+  oauth2:
+    client:
+#      client-id: 0oah02ykwu2GWXRcU0h7
+      client-secret: SCDMxLe4Dl04PkGwGj-OZTbn7OyqC7rR47JFinrU
+      access-token-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/token
+      user-authorization-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/authorize
+      scope: openid profile email
+    resource:
+      user-info-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/userinfo

@@ -18,14 +18,17 @@ dependencies {
 
     springBootStarter("actuator")
     springBootStarter("data-mongodb")
-//    springBootStarter("security")
+    springBootStarter("security")
     springBootStarter("tomcat")
     springBootStarter("web")
+    springBootStarter("thymeleaf")
 
 //    springCloud("config-client")
     springCloud("starter-netflix-eureka-client")
 //    springCloud("starter-netflix-zuul")
 //    springCloud("starter-sleuth")
+
+    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE")
 
     compile("com.google.code.gson:gson:2.8.5") // Added because of issues with starter-netflix-eureka-client
     compile("io.jsonwebtoken:jjwt:0.9.1")

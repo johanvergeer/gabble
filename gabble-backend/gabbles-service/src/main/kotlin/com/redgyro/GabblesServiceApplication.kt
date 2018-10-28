@@ -5,12 +5,24 @@ import com.redgyro.repositories.GabbleRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.actuate.trace.http.HttpTrace
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.util.*
+import org.springframework.security.oauth2.provider.OAuth2Authentication
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.GetMapping
+import java.security.Principal
+import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -48,5 +60,29 @@ class StartupCommandLineRunner(private val gabbleRepository: GabbleRepository) :
         } else {
             logger.info("Database alread contains Gabble objects")
         }
+    }
+}
+
+@Controller
+class HomeController {
+    @GetMapping(value = ["/home"])
+    fun howdy(model: Model, principal: Principal): String {
+        val authentication = principal as OAuth2Authentication
+        val user = authentication.userAuthentication.details as Map<*, *>
+        model.addAttribute("user", user)
+        return "home"
+    }
+}
+
+@Configuration
+@EnableResourceServer
+class ResourceServerConfig : ResourceServerConfigurerAdapter() {
+
+    @Throws(Exception::class)
+    override fun configure(http: HttpSecurity) {
+        http.requestMatcher(RequestHeaderRequestMatcher("Authorization"))
+                .authorizeRequests()
+                .anyRequest()
+                .fullyAuthenticated()
     }
 }
