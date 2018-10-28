@@ -15,3 +15,8 @@ data class Gabble(
         val likedBy: MutableSet<String> = mutableSetOf(),
         val mentions: MutableSet<Long> = mutableSetOf()
 )
+
+data class GabbleCreateDto(
+        val text: String,
+        val createdById: String
+)

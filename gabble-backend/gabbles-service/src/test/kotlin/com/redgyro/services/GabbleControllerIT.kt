@@ -1,15 +1,16 @@
 package com.redgyro.services
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.redgyro.StartupCommandLineRunner
 import com.redgyro.controllers.GabbleController
 import com.redgyro.models.Gabble
+import com.redgyro.models.GabbleCreateDto
 import com.redgyro.randomUUIDAsString
 import com.redgyro.repositories.GabbleRepository
 import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.shouldBe
 import io.restassured.RestAssured
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -33,6 +34,9 @@ private class GabbleControllerIT {
 
     @Autowired
     lateinit var gabbleRepository: GabbleRepository
+
+    @Autowired
+    lateinit var jsonMapper: ObjectMapper
 
     @LocalServerPort
     var port: Int = 0
@@ -68,6 +72,26 @@ private class GabbleControllerIT {
                 .then()
                 .assertThat()
                 .body("size()", `is`(5))
+    }
+
+    @Test
+    fun `create new gabble - success`() {
+        val userId = "00ugl9afjiwNub6yt0h8"
+        val text = "new gabble text"
+        val newGabble = GabbleCreateDto(text = text, createdById = userId)
+        val newGabbleJson = jsonMapper.writeValueAsString(newGabble)
+
+        val request = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body(newGabbleJson)
+
+        request.post(GabbleController.BASE_URL)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("id", notNullValue())
+                .body("text", equalTo(text))
+                .body("createdById", equalTo(userId))
     }
 
     @Test
