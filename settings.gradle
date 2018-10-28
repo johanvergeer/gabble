@@ -2,7 +2,6 @@ rootProject.name = 'gabble'
 
 include 'gabble-backend'
 include 'gabble-backend:eureka-naming-server'
+include 'gabble-backend:gabbles-service'
 include 'gabble-backend:spring-cloud-config-server'
 include 'gabble-backend:zuul-api-gateway-server'
-
-

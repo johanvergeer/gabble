@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: gabble
+  application:
+    name: gabbles-service
+#spring.data.mongodb.authentication-database=[authentication_database]
+#spring.data.mongodb.username=[username]
+#spring.data.mongodb.password=[password]
+#spring.data.mongodb.database=rest_tutorial

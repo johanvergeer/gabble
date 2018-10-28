@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="auth-service_main" target="1.8" />
+      <module name="auth-service_test" target="1.8" />
       <module name="gabble_main" target="1.8" />
       <module name="gabble_test" target="1.8" />
     </bytecodeTargetLevel>
