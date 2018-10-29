@@ -3,6 +3,7 @@ package com.redgyro.controllers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.redgyro.models.UserProfile
 import com.redgyro.repositories.UserProfileRepository
+import io.kotlintest.shouldBe
 import io.restassured.RestAssured
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -84,13 +85,47 @@ class UserProfilesControllerIT {
     }
 
     @Test
-    @Disabled("TODO - Implement create new profile")
+    @DirtiesContext
     fun `create new profile - success`() {
+        val userId = "00ugl9afjiwNub6yt0h8"
+        val bio = "new user bio"
+        val location = "Amsterdam"
+        val website = "http://nu.nl"
+        val newUserProfile = UserProfile(userId = userId, bio = bio, location = location, website = website)
+        val newUserProfileJson = jsonMapper.writeValueAsString(newUserProfile)
+
+        val request = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body(newUserProfileJson)
+
+        request.post(UserProfilesController.BASE_URL)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("bio", equalTo(bio))
+
+        userProfileRepository.count() shouldBe 3
     }
 
     @Test
-    @Disabled("TODO - Implement create new profile when userId already exists")
     fun `create new profile - userId already exists`() {
+        val userId = USER_1_ID
+        val bio = "new user bio"
+        val location = "Amsterdam"
+        val website = "http://nu.nl"
+        val newUserProfile = UserProfile(userId = userId, bio = bio, location = location, website = website)
+        val newUserProfileJson = jsonMapper.writeValueAsString(newUserProfile)
 
+        val request = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .body(newUserProfileJson)
+
+        request.post(UserProfilesController.BASE_URL)
+                .then()
+                .assertThat()
+                .statusCode(409) // Conflict
+                .body("message", equalTo("User profile for user with id $USER_1_ID already exists"))
+
+        userProfileRepository.count() shouldBe 2
     }
 }
