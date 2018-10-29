@@ -46,10 +46,10 @@ private class GabbleControllerIT {
         val logger: Logger = LoggerFactory.getLogger(StartupCommandLineRunner::class.java)
 
         val GABBLE_1 = Gabble(id = randomUUIDAsString(), text = "Gabble 1 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
-        val GABBLE_2 = Gabble(id = randomUUIDAsString(), text = "Gabble 2 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
-        val GABBLE_3 = Gabble(id = randomUUIDAsString(), text = "Gabble 3 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
+        val GABBLE_2 = Gabble(id = randomUUIDAsString(), text = "Gabble 2 text", createdById = "00ugl9afjiwNub6yt0f9", createdOn = LocalDateTime.now())
+        val GABBLE_3 = Gabble(id = randomUUIDAsString(), text = "Gabble 3 text", createdById = "00ugl9afjiwNub6yt0b7", createdOn = LocalDateTime.now())
         val GABBLE_4 = Gabble(id = randomUUIDAsString(), text = "Gabble 4 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
-        val GABBLE_5 = Gabble(id = randomUUIDAsString(), text = "Gabble 5 text", createdById = "00ugl9afjiwNub6yt0h7", createdOn = LocalDateTime.now())
+        val GABBLE_5 = Gabble(id = randomUUIDAsString(), text = "Gabble 5 text", createdById = "00ugl9afjiwNub6yt0i0", createdOn = LocalDateTime.now())
     }
 
 
@@ -60,7 +60,7 @@ private class GabbleControllerIT {
     }
 
     @BeforeEach
-    fun setupBeforeEach(){
+    fun setupBeforeEach() {
 
         gabbleRepository.deleteAll()
 
@@ -77,6 +77,17 @@ private class GabbleControllerIT {
                 .then()
                 .assertThat()
                 .body("size()", `is`(5))
+    }
+
+    @Test
+    fun `get all gabbles for user - success`() {
+        RestAssured.given()
+                .queryParam("userId", "00ugl9afjiwNub6yt0h7")
+                .`when`()
+                .get(GabbleController.BASE_URL)
+                .then()
+                .assertThat()
+                .body("size()", `is`(2))
     }
 
     @Test

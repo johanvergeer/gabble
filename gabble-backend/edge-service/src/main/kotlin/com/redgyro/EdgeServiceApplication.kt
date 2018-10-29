@@ -20,9 +20,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
 
@@ -47,11 +45,16 @@ fun main(args: Array<String>) {
 data class Gabble(
         val id: String = "",
         val text: String = "",
-        val createdById: Long = 0,
+        val createdById: String = "",
         val createdOn: LocalDateTime? = null,
-        val tags: Set<String> = setOf(),
-        val likedBy: Set<Long> = setOf(),
-        val mentions: Set<Long> = setOf()
+        val tags: MutableSet<String> = mutableSetOf(),
+        val likedBy: MutableSet<String> = mutableSetOf(),
+        val mentions: MutableSet<String> = mutableSetOf()
+)
+
+data class GabbleCreateDto(
+        val text: String,
+        val createdById: String
 )
 
 @Component
@@ -61,6 +64,12 @@ interface GabbleClient {
 
     @GetMapping(value = ["/gabbles"])
     fun getAllGabbles(): List<Gabble>
+
+    @PostMapping
+    fun createNewGabble(@RequestBody gabbleCreateDto: GabbleCreateDto): Gabble
+
+    @PostMapping(value = ["/{gabbleId}/likes/{userId}"])
+    fun addLikeToGabble(@PathVariable gabbleId: String, @PathVariable userId: String)
 }
 
 @RestController

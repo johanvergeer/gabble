@@ -2,7 +2,6 @@ package com.redgyro.controllers
 
 import com.redgyro.models.Gabble
 import com.redgyro.models.GabbleCreateDto
-import com.redgyro.services.GabbleNotFoundException
 import com.redgyro.services.GabbleService
 import org.springframework.web.bind.annotation.*
 
@@ -20,6 +19,9 @@ class GabbleController(private val gabbleService: GabbleService) {
 
     @GetMapping
     fun getAllGabbles(): List<Gabble> = gabbleService.findAllGabbles()
+
+    @GetMapping
+    fun getAllGabblesForUser(@RequestParam userId: String): List<Gabble> = gabbleService.findByUserId(userId)
 
     @PostMapping(value = ["/{gabbleId}/likes/{userId}"])
     fun addLikeToGabble(@PathVariable gabbleId: String, @PathVariable userId: String) {

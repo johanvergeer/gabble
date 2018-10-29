@@ -1,7 +1,6 @@
 package com.redgyro.services
 
 import com.redgyro.models.Gabble
-import com.redgyro.models.GabbleCreateDto
 import com.redgyro.randomUUIDAsString
 import com.redgyro.repositories.GabbleRepository
 import org.springframework.http.HttpStatus
@@ -52,4 +51,6 @@ class GabbleService(private val gabbleRepository: GabbleRepository) {
         gabble.likedBy.add(userId)
         gabbleRepository.save(gabble)
     }
+
+    fun findByUserId(userId: String): List<Gabble> = gabbleRepository.findByCreatedById(userId)
 }

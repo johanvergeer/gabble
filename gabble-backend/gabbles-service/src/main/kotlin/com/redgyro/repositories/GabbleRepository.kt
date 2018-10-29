@@ -8,4 +8,5 @@ import java.util.*
 
 @Repository
 interface GabbleRepository : CrudRepository<Gabble, String> {
+    fun findByCreatedById(userId: String): List<Gabble>
 }
