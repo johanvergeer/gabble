@@ -1,21 +1,34 @@
 spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: gabble
+  jpa:
+    show-sql: true
   application:
-    name: profiles-service
-security:
-  oauth2:
-    client:
-      client-id: 0oah02ykwu2GWXRcU0h7
-      client-secret: SCDMxLe4Dl04PkGwGj-OZTbn7OyqC7rR47JFinrU
-      access-token-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/token
-      user-authorization-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/authorize
-      scope: openid profile email
-    resource:
-      user-info-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/userinfo
+    name: user-profiles-service
 server:
-  port: 8080
+  port: 8090
 
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gabble_user_profiles
+    username: aPzhffHaiCRmKquRGmLXivCetTBiPukt
+    password: 7Lm3RzoGOFAxZjKOXgLOpNssUYCCCLMIerXbVU7cLw8OU07AyJnQUfqMdx4RS3KL
+    initialization-mode: always
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+logging:
+  level:
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:test
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect

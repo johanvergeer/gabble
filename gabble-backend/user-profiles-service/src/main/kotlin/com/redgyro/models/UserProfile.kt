@@ -7,7 +7,7 @@ import javax.validation.constraints.Size
 @Entity
 data class UserProfile (
     @Id
-    var userId: Long = 0,
+    var userId: String = "",
     @Size(max = 160)
     val bio: String = "",
     val location: String = "",

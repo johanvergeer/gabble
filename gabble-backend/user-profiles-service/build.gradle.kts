@@ -39,6 +39,7 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE")
     testCompile("io.rest-assured:rest-assured:3.2.0")
     testCompile("org.hamcrest:hamcrest-all:1.3")
+    testCompile("com.h2database:h2:1.4.197")
 }
 
 val test by tasks.getting(Test::class) {
