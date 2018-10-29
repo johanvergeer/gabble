@@ -5,6 +5,7 @@ import com.redgyro.models.UserProfile
 import com.redgyro.repositories.UserProfileRepository
 import io.restassured.RestAssured
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -34,7 +35,11 @@ class UserProfilesControllerIT {
     var port: Int = 0
 
     companion object {
-        val USER_PROFILE_1 = UserProfile(userId = "00ugl9afjiwNub6yt0h7", bio = "user 1 bio", location = "Helmond", website = "http://www.google.com")
+        const val USER_1_ID = "00ugl9afjiwNub6yt0h7"
+        const val USER_1_BIO = "user 1 bio"
+        const val USER_1_LOCATION = "Eindhoven"
+        const val USER_1_WEBSITE = "http://fontys.nl"
+        val USER_PROFILE_1 = UserProfile(userId = USER_1_ID, bio = USER_1_BIO, location = USER_1_LOCATION, website = USER_1_WEBSITE)
         val USER_PROFILE_2 = UserProfile(userId = "00ugl9afjiwNub6yt0i8", bio = "user 2 bio", location = "Helmond", website = "http://www.google.com")
     }
 
@@ -57,25 +62,35 @@ class UserProfilesControllerIT {
     }
 
     @Test
-    @Disabled("TODO - Implement get profile by user id")
     fun `get user profile by user id - success`() {
-
+        RestAssured.get("${UserProfilesController.BASE_URL}/$USER_1_ID/")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("bio", equalTo(USER_1_BIO))
+                .body("location", equalTo(USER_1_LOCATION))
+                .body("website", equalTo(USER_1_WEBSITE))
     }
 
     @Test
-    @Disabled("TODO - Implement user id not found")
     fun `get user profile by user id - not found`() {
+        val userId = "00ugl9afjiwNub6ytlshdfs"
 
+        RestAssured.get("${UserProfilesController.BASE_URL}/$userId/")
+                .then()
+                .assertThat()
+                .statusCode(404) // Not found
+                .body("message", equalTo("User profile for user with id $userId not found"))
+    }
+
+    @Test
+    @Disabled("TODO - Implement create new profile")
+    fun `create new profile - success`() {
     }
 
     @Test
     @Disabled("TODO - Implement create new profile when userId already exists")
     fun `create new profile - userId already exists`() {
 
-    }
-
-    @Test
-    @Disabled("TODO - Implement create new profile")
-    fun `create new profile - success`() {
     }
 }
