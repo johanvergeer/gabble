@@ -12,7 +12,7 @@ class UserProfilesController(private val userProfileService: UserProfileService)
     }
 
     @GetMapping
-    fun getAllUserProfiles() = userProfileService.findAllUserProfiles()
+    fun getAllUserProfiles(): List<UserProfile> = userProfileService.findAllUserProfiles()
 
     @GetMapping(value = ["/{userId}/"])
     fun getUserProfile(@PathVariable userId: String) = userProfileService.findUserById(userId)

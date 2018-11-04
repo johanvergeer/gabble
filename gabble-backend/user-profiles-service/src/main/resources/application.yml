@@ -11,8 +11,8 @@ spring:
   profiles: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/gabble_user_profiles
-    username: aPzhffHaiCRmKquRGmLXivCetTBiPukt
-    password: 7Lm3RzoGOFAxZjKOXgLOpNssUYCCCLMIerXbVU7cLw8OU07AyJnQUfqMdx4RS3KL
+    username: gabble
+    password: gabble
     initialization-mode: always
   jpa:
     properties:
@@ -23,6 +23,16 @@ spring:
 logging:
   level:
     org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
+security:
+  oauth2:
+    client:
+      client-id: 0oah02ykwu2GWXRcU0h7
+      client-secret: SCDMxLe4Dl04PkGwGj-OZTbn7OyqC7rR47JFinrU
+      access-token-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/token
+      user-authorization-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/authorize
+      scope: openid profile email
+    resource:
+      user-info-uri: https://dev-934296.oktapreview.com/oauth2/default/v1/userinfo
 ---
 spring:
   profiles: test

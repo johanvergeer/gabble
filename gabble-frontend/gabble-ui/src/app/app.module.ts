@@ -4,10 +4,16 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GabblesComponent } from './gabbles/gabbles.component';
+import { StartPageComponent } from './start-page/start-page.component';
+import { GabblesListComponent } from './gabbles/gabbles-list/gabbles-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GabblesComponent,
+    StartPageComponent,
+    GabblesListComponent
   ],
   imports: [
     BrowserModule,
