@@ -1,11 +1,30 @@
+<link
+  href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.6.0/css/okta-sign-in.min.css"
+  type="text/css"
+  rel="stylesheet"/>
+<link
+  href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.6.0/css/okta-theme.css"
+  type="text/css"
+  rel="stylesheet"/>
+<router-outlet></router-outlet>
+
 <mat-toolbar color="primary">
   <span>Welcome to {{title}}!</span>
   <span class="toolbar-spacer"></span>
   <button
+    class="button-spacer"
     mat-raised-button
     color="accent"
     *ngIf="!isAuthenticated"
-    (click)="login()">Login
+    routerLink="/register">
+    Register
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="!isAuthenticated"
+    routerLink="/login">
+    Login
   </button>
   <button
     mat-raised-button
@@ -15,6 +34,6 @@
   </button>
 </mat-toolbar>
 
-<app-profile></app-profile>
+<!--<app-profile></app-profile>-->
 
 <router-outlet></router-outlet>

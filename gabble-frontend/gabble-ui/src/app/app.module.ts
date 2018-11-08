@@ -12,23 +12,26 @@ import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
-  MatGridListModule, MatIconModule,
-  MatToolbar,
+  MatGridListModule,
+  MatIconModule,
   MatToolbarModule
 } from "@angular/material";
 import {
   OktaAuthModule,
-  OktaCallbackComponent
-} from "@okta/okta-angular";
+  OktaCallbackComponent,
+  OktaAuthGuard
+} from '@okta/okta-angular';
 import {FormsModule} from "@angular/forms";
 import {RouterModule, Routes} from "@angular/router";
 import {AuthInterceptor} from "./shared/okta/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileService} from "./shared/profile/profile.service";
+import {LoginComponent} from './login/login.component';
 
 const appRoutes: Routes = [
-  {path: 'implicit/callback', component: OktaCallbackComponent}
+  {path: 'implicit/callback', component: OktaCallbackComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 const oktaConfig = {
@@ -37,13 +40,19 @@ const oktaConfig = {
   clientId: '0oah6orjpumpDqaql0h7'
 };
 
+export function onAuthRequired({oktaAuth, router}) {
+  // Redirect the user to your custom login page
+  router.navigate(['/login']);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
     GabblesComponent,
     StartPageComponent,
     GabblesListComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
