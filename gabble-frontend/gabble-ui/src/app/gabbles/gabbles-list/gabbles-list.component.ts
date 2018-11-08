@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GabblesService} from "../../shared/gabbles/gabbles.service";
 
 @Component({
   selector: 'app-gabbles-list',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gabbles-list.component.scss']
 })
 export class GabblesListComponent implements OnInit {
-
-  constructor() { }
+  
+  constructor(private gabblesService: GabblesService) {
+  }
 
   ngOnInit() {
   }
-
 }

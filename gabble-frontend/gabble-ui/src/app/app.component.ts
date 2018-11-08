@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {OktaAuthService} from "@okta/okta-angular";
 
 @Component({
   selector: 'app-root',
@@ -6,13 +7,29 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'gabble-ui';
-  user;
-  signIn;
+  title = 'Gabble';
+  isAuthenticated: boolean;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(public oktaAuth: OktaAuthService) {
   }
 
+  async ngOnInit() {
+    // Get the authentication state for immediate use
+    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+
+    // Subscribe to authentication state changes
+    this.oktaAuth.$authenticationState.subscribe(
+      (isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated
+    );
+  }
+
+  login() {
+    this.oktaAuth.loginRedirect('/profile');
+  }
+
+  logout() {
+    this.oktaAuth.logout('/');
+  }
 
   // noinspection JSMethodCanBeStatic
   getUser(token) {
@@ -21,9 +38,5 @@ export class AppComponent implements OnInit {
       email: token.claims.email,
       username: token.claims.preferred_username
     };
-  }
-
-  ngOnInit() {
-
   }
 }
