@@ -16,6 +16,7 @@ class UserIdExistsException(userId: String) : Exception("User profile for user w
 class UserProfileService(private val userProfileRepository: UserProfileRepository) {
 
     fun findAllUserProfiles() = userProfileRepository.findAll().toList()
+
     fun findUserById(userId: String): UserProfile = userProfileRepository
             .findById(userId)
             .orElseThrow { UserProfileNotFoundException(userId) }

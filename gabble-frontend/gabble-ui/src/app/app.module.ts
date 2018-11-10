@@ -27,11 +27,11 @@ import {AuthInterceptor} from "./shared/okta/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileService} from "./shared/profile/profile.service";
-import {LoginComponent} from './login/login.component';
 
 const appRoutes: Routes = [
+  {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'implicit/callback', component: OktaCallbackComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard]}
 ];
 
 const oktaConfig = {
@@ -52,7 +52,6 @@ export function onAuthRequired({oktaAuth, router}) {
     StartPageComponent,
     GabblesListComponent,
     ProfileComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule,
