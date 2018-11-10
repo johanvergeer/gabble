@@ -27,6 +27,7 @@ import {AuthInterceptor} from "./shared/okta/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileService} from "./shared/profile/profile.service";
+import { TitleBarComponent } from './title-bar/title-bar.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -52,6 +53,7 @@ export function onAuthRequired({oktaAuth, router}) {
     StartPageComponent,
     GabblesListComponent,
     ProfileComponent,
+    TitleBarComponent,
   ],
   imports: [
     BrowserModule,
