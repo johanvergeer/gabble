@@ -1,27 +1,44 @@
-<mat-toolbar color="primary">
-  <span>Welcome to {{title}}!</span>
-  <span class="toolbar-spacer"></span>
-  <button
-    class="button-spacer"
-    mat-raised-button
-    color="accent"
-    *ngIf="!oktaAuth.isAuthenticated"
-    routerLink="/register">
-    Register
-  </button>
-  <button
-    mat-raised-button
-    color="accent"
-    *ngIf="!oktaAuth.isAuthenticated"
-    routerLink="/login">
-    Login
-  </button>
-  <button
-    mat-raised-button
-    color="accent"
-    *ngIf="isAuthenticated"
-    (click)="logout()">Logout
-  </button>
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-around center">
+  <div fxFlex="80%">
+    <button
+      mat-button
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Start pagina
+    </button>
+    <button
+      mat-button routerLink="/mentions"
+      routerLinkActive="active">
+      Mentions
+    </button>
+    <button
+      class="button-spacer"
+      mat-raised-button
+      color="accent"
+      *ngIf="!oktaAuth.isAuthenticated"
+      routerLink="/register">
+      Register
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      *ngIf="!oktaAuth.isAuthenticated"
+      routerLink="/login">
+      Login
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      *ngIf="isAuthenticated"
+      (click)="logout()">Logout
+    </button>
+  </div>
 </mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="space-around center">
+  <div fxFlex="80%">
+    <router-outlet></router-outlet>
+  </div>
+</div>
 
-<router-outlet></router-outlet>
+

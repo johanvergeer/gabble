@@ -3,17 +3,18 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AuthInterceptor} from "./shared/okta/auth.interceptor";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GabblesComponent} from './gabbles/gabbles.component';
-import {StartPageComponent} from './start-page/start-page.component';
 import {GabblesListComponent} from './gabbles/gabbles-list/gabbles-list.component';
 import {GabblesService} from "./shared/gabbles/gabbles.service";
+import {StartPageComponent} from './start-page/start-page.component';
 import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatIconModule,
+  MatIconModule, MatMenuModule,
   MatToolbarModule
 } from "@angular/material";
 import {
@@ -22,15 +23,17 @@ import {
   OktaAuthGuard
 } from '@okta/okta-angular';
 import {FormsModule} from "@angular/forms";
+import {FlexLayoutModule} from "@angular/flex-layout";
 import {RouterModule, Routes} from "@angular/router";
-import {AuthInterceptor} from "./shared/okta/auth.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileService} from "./shared/profile/profile.service";
-import { TitleBarComponent } from './title-bar/title-bar.component';
+import {TitleBarComponent} from './title-bar/title-bar.component';
+import { MentionsPageComponent } from './mentions-page/mentions-page.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
+  {path: 'mentions', component: MentionsPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'implicit/callback', component: OktaCallbackComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard]}
 ];
@@ -54,17 +57,20 @@ export function onAuthRequired({oktaAuth, router}) {
     GabblesListComponent,
     ProfileComponent,
     TitleBarComponent,
+    MentionsPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     FormsModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
+    MatMenuModule,
     MatToolbarModule,
     OktaAuthModule.initAuth(oktaConfig),
     RouterModule.forRoot(appRoutes)
