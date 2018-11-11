@@ -9,7 +9,7 @@ import {OktaAuthService} from "@okta/okta-angular";
   styleUrls: ['./dashboard-profile-card.component.scss']
 })
 export class DashboardProfileCardComponent implements OnInit {
-  profile: Profile = new Profile('', '', '', '', '');
+  profile: Profile = new Profile('', '', '', '', '', 0, 0);
 
   constructor(private profileService: ProfileService, private oktaAuthService: OktaAuthService) {
   }

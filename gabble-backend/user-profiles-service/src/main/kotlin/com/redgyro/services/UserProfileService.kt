@@ -1,5 +1,6 @@
 package com.redgyro.services
 
+import com.redgyro.dto.userprofiles.UserProfileDto
 import com.redgyro.models.UserProfile
 import com.redgyro.repositories.UserProfileRepository
 import org.springframework.http.HttpStatus
@@ -17,9 +18,19 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
 
     fun findAllUserProfiles() = userProfileRepository.findAll().toList()
 
-    fun findUserById(userId: String): UserProfile = userProfileRepository
-            .findById(userId)
-            .orElseThrow { UserProfileNotFoundException(userId) }
+    fun findUserById(userId: String): UserProfileDto = userProfileRepository
+        .findById(userId)
+        .map {
+            UserProfileDto(
+                it.userId,
+                it.username,
+                it.bio,
+                it.location,
+                it.website,
+                followersCount = it.followers.count(),
+                followingCount = it.following.count())
+        }
+        .orElseThrow { UserProfileNotFoundException(userId) }
 
     fun createNewUserProfile(userProfile: UserProfile): UserProfile {
         if (userProfileRepository.findById(userProfile.userId).isPresent) throw UserIdExistsException(userProfile.userId)

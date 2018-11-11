@@ -4,6 +4,8 @@ export class Profile {
     public username: string,
     public location: string,
     public website: string,
-    public bio: string) {
+    public bio: string,
+    followersCount: number,
+    followingCount: number) {
   }
 }
