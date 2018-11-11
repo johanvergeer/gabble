@@ -1,6 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Profile} from "./profile.model";
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class ProfileService implements OnInit {
@@ -15,13 +16,13 @@ export class ProfileService implements OnInit {
     this.profiles.push()
   }
 
-  // findById(id: string): Profile {
-  //   response = this.httpClient
-  //     .get("http://localhost:8090/user-profiles/00ugl9afjiwNub6yt0h7/")
-  //     .subscribe(response => {
-  //       response.toString() as Profile
-  //     })
-  // }
+  findById(id: string): Observable<Profile> {
+    return this.httpClient
+      .get<Profile>(`http://localhost:8090/user-profiles/${id}/`)
+      // .subscribe(response => {
+      //   response.toString() as Profile
+      // })
+  }
 
   findByName(name: string) {
     // return this.profiles.find(profile => profile.name === name)

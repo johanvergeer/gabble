@@ -10,18 +10,16 @@ import {Observable} from "rxjs/Observable";
   styleUrls: ['./dashboard-profile-card.component.scss']
 })
 export class DashboardProfileCardComponent implements OnInit {
-  profile: Profile;
+  profile: Profile = new Profile('', '', '', '', '');
   profileObservable: Observable<Profile>;
 
   constructor(private profileService: ProfileService, private httpClient: HttpClient) {
   }
 
   ngOnInit() {
-    this.httpClient
-      .get<Profile>("http://localhost:8090/user-profiles/00ugl9afjiwNub6yt0h7/")
-      .subscribe(profile => console.log(profile));
-
-    // console.log(this.profileObservable)
+    this.profileService.findById("00ugl9afjiwNub6yt0h7").subscribe(profile => {
+      this.profile = profile;
+    });
   }
 
 }
