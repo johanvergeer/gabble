@@ -3,46 +3,9 @@
     <app-dashboard-profile-card></app-dashboard-profile-card>
     <app-trends></app-trends>
   </div>
-
 </div>
 <div fxFlex="50%" class="center-column" fxLayoutAlign="center start">
-  <div fxFlex="90%">
-    <form>
-      <mat-form-field fxFlex="grow">
-        <input matInput placeholder="What's up?">
-      </mat-form-field>
-    </form>
-    <div fxLayout="column" fxLayoutGap="10px">
-      <mat-card fxFlex="100%">
-        <mat-card-title>
-          <mat-icon>account_circle</mat-icon>
-          <span>Username</span>
-        </mat-card-title>
-        <mat-card-content>
-          Text of maximum 140 characters
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-mini-fab>
-            <mat-icon>thumb_up</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-card>
-        <mat-card-title>
-          <mat-icon>account_circle</mat-icon>
-          <span>Username</span>
-        </mat-card-title>
-        <mat-card-content>
-          Text of maximum 140 characters
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-mini-fab>
-            <mat-icon>thumb_up</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </div>
+  <app-timeline fxFlex="90%"></app-timeline>
 </div>
 
 <div fxFlex="25%" class="right-column" fxLayout="column" fxLayoutGap="10px">

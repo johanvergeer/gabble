@@ -32,6 +32,9 @@ import {TitleBarComponent} from './title-bar/title-bar.component';
 import { MentionsPageComponent } from './mentions-page/mentions-page.component';
 import { DashboardProfileCardComponent } from './dashboard-profile-card/dashboard-profile-card.component';
 import { TrendsComponent } from './trends/trends.component';
+import { TimelineComponent } from './timeline/timeline.component';
+import { TimelineGabbleBoxComponent } from './timeline/timeline-gabble-box/timeline-gabble-box.component';
+import { TimelineGabblesComponent } from './timeline/timeline-gabbles/timeline-gabbles.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -62,6 +65,9 @@ export function onAuthRequired({oktaAuth, router}) {
     MentionsPageComponent,
     DashboardProfileCardComponent,
     TrendsComponent,
+    TimelineComponent,
+    TimelineGabbleBoxComponent,
+    TimelineGabblesComponent,
   ],
   imports: [
     BrowserModule,
