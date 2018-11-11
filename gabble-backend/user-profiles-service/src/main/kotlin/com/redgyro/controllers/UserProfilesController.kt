@@ -1,5 +1,6 @@
 package com.redgyro.controllers
 
+import com.redgyro.auth.getUserId
 import com.redgyro.models.UserProfile
 import com.redgyro.services.UserProfileService
 import org.springframework.web.bind.annotation.*
@@ -16,14 +17,10 @@ class UserProfilesController(private val userProfileService: UserProfileService)
     fun getAllUserProfiles(): List<UserProfile> = userProfileService.findAllUserProfiles()
 
     @GetMapping(value = ["/{userId}/"])
-    fun getUserProfile(@PathVariable userId: String) = userProfileService.findUserById(userId)
+    fun getUserProfile(@PathVariable userId: String, principal: Principal) = userProfileService.findUserById(principal.getUserId())
 
     @GetMapping(value = ["/profile/"])
-    fun getUserProfile(principal: Principal) {
-//        val profile = userProfileService.findUserById()
-
-        println(principal)
-    }
+    fun getProfileForLoggedInUser(principal: Principal) = userProfileService.findUserById(principal.getUserId())
 
     @PostMapping
     fun createNewUserProfile(@RequestBody userProfile: UserProfile) = userProfileService.createNewUserProfile(userProfile)

@@ -16,7 +16,7 @@ export class DashboardProfileCardComponent implements OnInit {
 
   ngOnInit() {
     this.oktaAuthService.getUser().then((user) => {
-      this.profileService.findById(user.sub).subscribe(profile => {
+      this.profileService.findForLoggedInUser().subscribe(profile => {
         this.profile = profile;
       });
     });

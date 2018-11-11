@@ -5,23 +5,21 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export class ProfileService implements OnInit {
-  profiles: Profile[] = [
-    new Profile('abcd1234', 'johan', 'Helmond', 'https://www.redgyro.com', 'something about Johan')
-  ];
 
   constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
-    this.profiles.push()
   }
 
   findById(id: string): Observable<Profile> {
     return this.httpClient
       .get<Profile>(`http://localhost:8090/user-profiles/${id}/`)
-      // .subscribe(response => {
-      //   response.toString() as Profile
-      // })
+  }
+
+  findForLoggedInUser(): Observable<Profile> {
+    return this.httpClient
+      .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
   }
 
   findByName(name: string) {
