@@ -31,6 +31,7 @@ import {ProfileService} from "./shared/profile/profile.service";
 import {TitleBarComponent} from './title-bar/title-bar.component';
 import { MentionsPageComponent } from './mentions-page/mentions-page.component';
 import { DashboardProfileCardComponent } from './dashboard-profile-card/dashboard-profile-card.component';
+import { TrendsComponent } from './trends/trends.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -60,6 +61,7 @@ export function onAuthRequired({oktaAuth, router}) {
     TitleBarComponent,
     MentionsPageComponent,
     DashboardProfileCardComponent,
+    TrendsComponent,
   ],
   imports: [
     BrowserModule,
