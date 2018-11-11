@@ -1,3 +1,102 @@
-<p>
-  start-page works!
-</p>
+<div fxFlex="25%" class="left-column" fxLayout="row" fxLayoutAlign="center start">
+  <div fxFlex="90%" fxLayout="column" fxLayoutGap="10px">
+    <mat-card>
+      <mat-card-header>
+        <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+        <mat-card-title>johan_vergeer</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="row" fxLayoutGap="5%">
+        <div fxFlex="33%">
+          <div class="status-label">Gabbles</div>
+          <div class="status-value">123</div>
+        </div>
+        <div fxFlex="33%">
+          <div class="status-label">Following</div>
+          <div class="status-value">10</div>
+        </div>
+        <div fxFlex="33%">
+          <div class="status-label">Followers</div>
+          <div class="status-value">12</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Trends</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="trend-name">#Foo</div>
+        <div class="trend-name">#Bar</div>
+        <div class="trend-name">#Baz</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+<div fxFlex="50%" class="center-column" fxLayoutAlign="center start">
+  <div fxFlex="90%">
+    <form>
+      <mat-form-field fxFlex="grow">
+        <input matInput placeholder="What's up?">
+      </mat-form-field>
+    </form>
+    <div fxLayout="column" fxLayoutGap="10px">
+      <mat-card fxFlex="100%">
+        <mat-card-title>
+          <mat-icon>account_circle</mat-icon>
+          <span>Username</span>
+        </mat-card-title>
+        <mat-card-content>
+          Text of maximum 140 characters
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-mini-fab>
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+        <mat-card-title>
+          <mat-icon>account_circle</mat-icon>
+          <span>Username</span>
+        </mat-card-title>
+        <mat-card-content>
+          Text of maximum 140 characters
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-mini-fab>
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div fxFlex="25%" class="right-column" fxLayout="column" fxLayoutGap="10px">
+  <h1>You can follow:</h1>
+  <mat-card>
+    <mat-card-header>
+      <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+      <mat-card-title>johan_vergeer</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+      <mat-card-title>johan_vergeer</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+      <mat-card-title>johan_vergeer</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+      <mat-card-title>johan_vergeer</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+</div>

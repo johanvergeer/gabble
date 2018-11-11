@@ -1,0 +1,45 @@
+.left-column {
+  //background-color: pink;
+
+  .profile-image {
+      background-color: purple;
+      width: 100%;
+      border-radius: 50%;
+  }
+
+  .status-label {
+    color: #657786;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .status-value {
+    color: #1DA1F2;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .mat-card-title {
+    font-size: 20px;
+  }
+
+  .mat-card-header {
+    margin-bottom: 10px;
+  }
+
+  .trend-name {
+    color: #1DA1F2;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+
+.center-column {
+}
+
+.right-column {
+  .mat-card-title {
+    font-size: 20px;
+  }
+}

@@ -14,7 +14,7 @@ import {
   MatCardModule, MatDividerModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatIconModule, MatInputModule, MatMenuModule,
+  MatIconModule, MatInputModule, MatListModule, MatMenuModule,
   MatToolbarModule
 } from "@angular/material";
 import {
@@ -72,6 +72,7 @@ export function onAuthRequired({oktaAuth, router}) {
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatMenuModule,
     MatToolbarModule,
     OktaAuthModule.initAuth(oktaConfig),
