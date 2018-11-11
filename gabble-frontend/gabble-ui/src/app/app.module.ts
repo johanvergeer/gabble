@@ -11,10 +11,10 @@ import {GabblesService} from "./shared/gabbles/gabbles.service";
 import {StartPageComponent} from './start-page/start-page.component';
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDividerModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatIconModule, MatMenuModule,
+  MatIconModule, MatInputModule, MatMenuModule,
   MatToolbarModule
 } from "@angular/material";
 import {
@@ -67,9 +67,11 @@ export function onAuthRequired({oktaAuth, router}) {
     FormsModule,
     MatButtonModule,
     MatCardModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
+    MatInputModule,
     MatMenuModule,
     MatToolbarModule,
     OktaAuthModule.initAuth(oktaConfig),
