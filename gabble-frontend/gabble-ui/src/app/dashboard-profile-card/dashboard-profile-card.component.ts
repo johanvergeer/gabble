@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from "../shared/profile/profile.service";
 import {Profile} from "../shared/profile/profile.model";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {OktaAuthService} from "@okta/okta-angular";
 
 @Component({
   selector: 'app-dashboard-profile-card',
@@ -11,15 +10,15 @@ import {Observable} from "rxjs/Observable";
 })
 export class DashboardProfileCardComponent implements OnInit {
   profile: Profile = new Profile('', '', '', '', '');
-  profileObservable: Observable<Profile>;
 
-  constructor(private profileService: ProfileService, private httpClient: HttpClient) {
+  constructor(private profileService: ProfileService, private oktaAuthService: OktaAuthService) {
   }
 
   ngOnInit() {
-    this.profileService.findById("00ugl9afjiwNub6yt0h7").subscribe(profile => {
-      this.profile = profile;
+    this.oktaAuthService.getUser().then((user) => {
+      this.profileService.findById(user.sub).subscribe(profile => {
+        this.profile = profile;
+      });
     });
   }
-
 }
