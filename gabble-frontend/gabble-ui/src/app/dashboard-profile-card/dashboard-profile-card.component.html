@@ -3,18 +3,32 @@
     <img mat-card-avatar src="assets/johan-vergeer.jpeg">
     <mat-card-title>{{profile.username}}</mat-card-title>
   </mat-card-header>
-  <mat-card-content fxLayout="row" fxLayoutGap="5%">
-    <div fxFlex="33%">
-      <div class="status-label">Gabbles</div>
-      <div class="status-value">123</div>
+  <mat-card-content fxLayout="column" fxLayoutGap="5px">
+    <div *ngIf="profile.bio" fxLayout="column" fxLayoutGap="3px">
+      <div class="status-label">
+        biography
+      </div>
+      <div>{{profile.bio}}</div>
     </div>
-    <div fxFlex="33%">
-      <div class="status-label">Following</div>
-      <div class="status-value">10</div>
+    <div *ngIf="profile.website" fxLayout="column" fxLayoutGap="3px">
+      <div class="status-label">
+        website
+      </div>
+      <a href="{{profile.website}}" target="_blank"> {{profile.website}}</a>
     </div>
-    <div fxFlex="33%">
-      <div class="status-label">Followers</div>
-      <div class="status-value">12</div>
+    <div fxLayout="row" fxLayoutGap="5%">
+      <div fxFlex="33%">
+        <div class="status-label">Gabbles</div>
+        <div class="status-value">123</div>
+      </div>
+      <div fxFlex="33%">
+        <div class="status-label">Following</div>
+        <div class="status-value">10</div>
+      </div>
+      <div fxFlex="33%">
+        <div class="status-label">Followers</div>
+        <div class="status-value">12</div>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>
