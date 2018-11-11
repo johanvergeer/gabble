@@ -25,7 +25,7 @@ import {
 import {FormsModule} from "@angular/forms";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {RouterModule, Routes} from "@angular/router";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileService} from "./shared/profile/profile.service";
 import {TitleBarComponent} from './title-bar/title-bar.component';
@@ -77,6 +77,7 @@ export function onAuthRequired({oktaAuth, router}) {
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
+    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatDividerModule,
@@ -93,6 +94,7 @@ export function onAuthRequired({oktaAuth, router}) {
   providers: [
     GabblesService,
     ProfileService,
+    HttpClientModule,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

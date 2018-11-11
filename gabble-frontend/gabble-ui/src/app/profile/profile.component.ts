@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.profile = this.profileService.findByName('johan');
+    // this.profile = this.profileService.findByName('johan');
     console.log(this.oktaAuth.getUser());
     console.log(this.profile);
   }

@@ -5,9 +5,10 @@ import javax.persistence.*
 import javax.validation.constraints.Size
 
 @Entity
-data class UserProfile (
+data class UserProfile(
     @Id
     var userId: String = "",
+    var username: String = "",
     @Size(max = 160)
     val bio: String = "",
     val location: String = "",
