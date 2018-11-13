@@ -37,4 +37,7 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
 
         return userProfileRepository.save(userProfile)
     }
+
+//    fun findNotFollowing(userId: String): Set<UserProfileDto> = userProfileRepository
+//        .findNotFollowing(userId).map {  }
 }

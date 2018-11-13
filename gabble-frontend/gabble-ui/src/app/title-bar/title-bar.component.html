@@ -23,7 +23,7 @@
           <mat-icon>perm_identity</mat-icon>
         </button>
         <mat-menu #profile="matMenu">
-          <div style="padding: 0 10px; margin-bottom: 10px">This will be the username</div>
+          <div style="padding: 0 10px; margin-bottom: 10px" *ngIf="loggedInUserProfile">{{loggedInUserProfile.username}}</div>
           <mat-divider></mat-divider>
           <button
             mat-menu-item

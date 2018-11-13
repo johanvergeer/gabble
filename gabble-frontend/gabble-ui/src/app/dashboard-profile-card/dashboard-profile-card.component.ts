@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from "../shared/profile/profile.service";
 import {Profile} from "../shared/profile/profile.model";
-import {OktaAuthService} from "@okta/okta-angular";
 
 @Component({
   selector: 'app-dashboard-profile-card',
@@ -11,14 +10,13 @@ import {OktaAuthService} from "@okta/okta-angular";
 export class DashboardProfileCardComponent implements OnInit {
   profile: Profile = new Profile('', '', '', '', '', 0, 0);
 
-  constructor(private profileService: ProfileService, private oktaAuthService: OktaAuthService) {
+  constructor(private profileService: ProfileService) {
   }
 
   ngOnInit() {
-    this.oktaAuthService.getUser().then((user) => {
-      this.profileService.findForLoggedInUser().subscribe(profile => {
-        this.profile = profile;
-      });
+    this.profile = this.profileService.findForLoggedInUser();
+    this.profileService.loggedInUserProfileChanged.subscribe((profile) => {
+      this.profile = profile;
     });
   }
 }
