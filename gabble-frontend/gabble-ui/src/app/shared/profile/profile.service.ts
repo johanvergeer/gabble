@@ -7,7 +7,10 @@ import {OktaAuthService} from "@okta/okta-angular";
 @Injectable()
 export class ProfileService implements OnInit {
   private loggedInUserProfile: Profile;
+  private notFollowing: Profile[];
+
   loggedInUserProfileChanged = new Subject<Profile>();
+  notFollowingChanged = new Subject<Profile[]>();
 
   constructor(private httpClient: HttpClient, private oktaAuthService: OktaAuthService) {
   }
@@ -29,6 +32,19 @@ export class ProfileService implements OnInit {
         .subscribe((response) => {
           this.loggedInUserProfile = response;
           this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
+        })
+    }
+  }
+
+  findNotFollowing(): Profile[] {
+    if (this.notFollowing) {
+      return this.notFollowing.slice()
+    } else {
+      this.httpClient
+        .get<Profile[]>(`http://localhost:8090/user-profiles/profile/not-following/`)
+        .subscribe((response) => {
+          this.notFollowing = response;
+          this.notFollowingChanged.next(this.notFollowing.slice())
         })
     }
   }

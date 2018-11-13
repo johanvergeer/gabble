@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserProfileRepository : CrudRepository<UserProfile, String> {
 
-//    @Query("select u1, u2 from  u1 UserProfile, u2 UserPofile where u.userId not in (select )")
-//    fun findNotFollowing(userId: String): Set<UserProfile>
+    @Query("select u from UserProfile u where :userProfile not member of u.followers")
+    fun findNotFollowing(userProfile: UserProfile): Set<UserProfile>
 }

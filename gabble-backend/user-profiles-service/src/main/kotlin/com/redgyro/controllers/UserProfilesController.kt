@@ -22,6 +22,9 @@ class UserProfilesController(private val userProfileService: UserProfileService)
     @GetMapping(value = ["/profile/"])
     fun getProfileForLoggedInUser(principal: Principal) = userProfileService.findUserById(principal.getUserId())
 
+    @GetMapping(value = ["/profile/not-following/"])
+    fun getNotFollowing(principal: Principal) = userProfileService.findNotFollowing(principal.getUserId())
+
     @PostMapping
     fun createNewUserProfile(@RequestBody userProfile: UserProfile) = userProfileService.createNewUserProfile(userProfile)
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ProfileService} from "../shared/profile/profile.service";
+import {Profile} from "../shared/profile/profile.model";
 
 @Component({
   selector: 'app-who-to-follow',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./who-to-follow.component.scss']
 })
 export class WhoToFollowComponent implements OnInit {
+  notFollowing: Profile[];
 
-  constructor() { }
+  constructor(private profileService: ProfileService) {
+  }
 
   ngOnInit() {
+    this.notFollowing = this.profileService.findNotFollowing();
+    this.profileService.notFollowingChanged.subscribe((notFollowing) => {
+      this.notFollowing = notFollowing;
+      console.log(this.notFollowing);
+    })
   }
 
 }

@@ -38,6 +38,17 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
         return userProfileRepository.save(userProfile)
     }
 
-//    fun findNotFollowing(userId: String): Set<UserProfileDto> = userProfileRepository
-//        .findNotFollowing(userId).map {  }
+    fun findNotFollowing(userId: String): Set<UserProfileDto> = userProfileRepository
+        .findNotFollowing(userProfileRepository.findById(userId).get())
+        .map {
+            UserProfileDto(
+                it.userId,
+                it.username,
+                it.bio,
+                it.location,
+                it.website,
+                followersCount = it.followers.count(),
+                followingCount = it.following.count())
+        }
+        .toSet()
 }
