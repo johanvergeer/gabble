@@ -51,4 +51,16 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
                 followingCount = it.following.count())
         }
         .toSet()
+
+    fun followUser(followerId: String, followingId: String): Set<UserProfileDto> {
+        val follower = userProfileRepository.findById(followerId).orElseThrow { UserProfileNotFoundException(followerId) }
+        val following = userProfileRepository.findById(followingId).orElseThrow { UserProfileNotFoundException(followingId) }
+
+        follower.following.add(following)
+        following.followers.add(follower)
+
+        userProfileRepository.save(follower)
+
+        return findNotFollowing(followingId)
+    }
 }

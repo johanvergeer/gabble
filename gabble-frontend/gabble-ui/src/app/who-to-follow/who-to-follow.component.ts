@@ -21,4 +21,8 @@ export class WhoToFollowComponent implements OnInit {
     })
   }
 
+  onFollow(userProfile: Profile) {
+    console.log(`in inFollow: `, userProfile);
+    this.profileService.followUser(userProfile);
+  }
 }

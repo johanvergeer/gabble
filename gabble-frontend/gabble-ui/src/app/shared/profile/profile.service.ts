@@ -27,29 +27,55 @@ export class ProfileService implements OnInit {
     if (this.loggedInUserProfile) {
       return this.loggedInUserProfile;
     } else {
-      this.httpClient
-        .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
-        .subscribe((response) => {
-          this.loggedInUserProfile = response;
-          this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
-        })
+      this.updateLoggedInUser()
     }
+  }
+
+  updateLoggedInUser() {
+    this.httpClient
+      .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
+      .subscribe((response) => {
+        this.loggedInUserProfile = response;
+        this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
+      })
   }
 
   findNotFollowing(): Profile[] {
     if (this.notFollowing) {
       return this.notFollowing.slice()
     } else {
-      this.httpClient
-        .get<Profile[]>(`http://localhost:8090/user-profiles/profile/not-following/`)
-        .subscribe((response) => {
-          this.notFollowing = response;
-          this.notFollowingChanged.next(this.notFollowing.slice())
-        })
+      this.updateNotFollowing();
     }
+  }
+
+  updateNotFollowing() {
+    this.httpClient
+      .get<Profile[]>(`http://localhost:8090/user-profiles/profile/not-following/`)
+      .subscribe((response) => {
+        this.notFollowing = response;
+        this.notFollowingChanged.next(this.notFollowing.slice())
+      })
   }
 
   findByName(name: string) {
     // return this.profiles.find(profile => profile.name === name)
+  }
+
+  followUser(userProfile: Profile) {
+    console.log(`userProfile.id = `, userProfile.userId);
+
+    this.httpClient.post(`http://localhost:8090/user-profiles/profile/following/`, {'userId': userProfile.userId})
+      .subscribe(
+        (val) => {
+          console.log("POST call successful value returned in body", val);
+          this.updateLoggedInUser();
+          this.updateNotFollowing()
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
   }
 }
