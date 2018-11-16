@@ -36,6 +36,8 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { TimelineGabbleBoxComponent } from './timeline/timeline-gabble-box/timeline-gabble-box.component';
 import { TimelineGabblesComponent } from './timeline/timeline-gabbles/timeline-gabbles.component';
 import { WhoToFollowComponent } from './who-to-follow/who-to-follow.component';
+import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
+import { ProfileInfoComponent } from './profile/profile-info/profile-info.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -70,6 +72,8 @@ export function onAuthRequired({oktaAuth, router}) {
     TimelineGabbleBoxComponent,
     TimelineGabblesComponent,
     WhoToFollowComponent,
+    ProfileHeaderComponent,
+    ProfileInfoComponent,
   ],
   imports: [
     BrowserModule,

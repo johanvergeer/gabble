@@ -1,0 +1,26 @@
+<mat-card class="dashboard-profile-card" *ngIf="profile">
+  <mat-card-header>
+    <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+    <mat-card-title>{{profile.username}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content fxLayout="column" fxLayoutGap="5px">
+    <div *ngIf="profile.location" fxLayout="column" fxLayoutGap="3px">
+      <div class="status-label">
+        Location
+      </div>
+      <div>{{profile.location}}</div>
+    </div>
+    <div *ngIf="profile.bio" fxLayout="column" fxLayoutGap="3px">
+      <div class="status-label">
+        Biography
+      </div>
+      <div>{{profile.bio}}</div>
+    </div>
+    <div *ngIf="profile.website" fxLayout="column" fxLayoutGap="3px">
+      <div class="status-label">
+        website
+      </div>
+      <a href="{{profile.website}}" target="_blank"> {{profile.website}}</a>
+    </div>
+  </mat-card-content>
+</mat-card>
