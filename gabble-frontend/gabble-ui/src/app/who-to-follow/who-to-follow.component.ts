@@ -17,12 +17,10 @@ export class WhoToFollowComponent implements OnInit {
     this.notFollowing = this.profileService.findNotFollowing();
     this.profileService.notFollowingChanged.subscribe((notFollowing) => {
       this.notFollowing = notFollowing;
-      console.log(this.notFollowing);
     })
   }
 
   onFollow(userProfile: Profile) {
-    console.log(`in inFollow: `, userProfile);
     this.profileService.followUser(userProfile);
   }
 }

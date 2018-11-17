@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {Profile} from "./profile.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
-import {OktaAuthService} from "@okta/okta-angular";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class ProfileService implements OnInit {
@@ -12,15 +12,16 @@ export class ProfileService implements OnInit {
   loggedInUserProfileChanged = new Subject<Profile>();
   notFollowingChanged = new Subject<Profile[]>();
 
-  constructor(private httpClient: HttpClient, private oktaAuthService: OktaAuthService) {
+  constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
   }
 
-  findById(id: string): Observable<Profile> {
+  findById(userId: string): Observable<Profile> {
     return this.httpClient
-      .get<Profile>(`http://localhost:8090/user-profiles/${id}/`)
+      .get<Profile>(`http://localhost:8090/user-profiles/${userId}/`)
+      .pipe(map(res => new Profile(res)))
   }
 
   findForLoggedInUser(): Profile {
@@ -36,7 +37,6 @@ export class ProfileService implements OnInit {
       .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
       .subscribe((response) => {
         this.loggedInUserProfile = response;
-        this.loggedInUserProfile.website_name = this.loggedInUserProfile.website.replace(/(^\w+:|^)\/\//, '');
         this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
       })
   }

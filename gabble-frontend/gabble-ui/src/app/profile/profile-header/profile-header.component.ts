@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Profile} from "../../shared/profile/profile.model";
 import {ProfileService} from "../../shared/profile/profile.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-profile-header',
@@ -10,13 +11,15 @@ import {ProfileService} from "../../shared/profile/profile.service";
 export class ProfileHeaderComponent implements OnInit {
   profile: Profile;
 
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.profile = this.profileService.findForLoggedInUser();
-    this.profileService.loggedInUserProfileChanged.subscribe((profile) => {
-      this.profile = profile;
+    this.activatedRoute.params.subscribe(params => {
+      const userId = params["id"];
+      this.profileService.findById(userId).subscribe(profile => {
+        this.profile = profile;
+      });
     });
   }
 }

@@ -18,7 +18,7 @@ class UserProfilesController(private val userProfileService: UserProfileService)
     fun getAllUserProfiles(): List<UserProfile> = userProfileService.findAllUserProfiles()
 
     @GetMapping(value = ["/{userId}/"])
-    fun getUserProfile(@PathVariable userId: String, principal: Principal) = userProfileService.findUserById(principal.getUserId())
+    fun getUserProfile(@PathVariable userId: String) = userProfileService.findUserById(userId)
 
     @GetMapping(value = ["/profile/"])
     fun getProfileForLoggedInUser(principal: Principal) = userProfileService.findUserById(principal.getUserId())
