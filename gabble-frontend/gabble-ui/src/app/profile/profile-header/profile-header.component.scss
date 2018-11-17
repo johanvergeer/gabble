@@ -1,0 +1,30 @@
+.profile-header {
+
+  .left-column {
+    .profile-header-img {
+      width: 60%;
+      border: #3f51b5 5px solid;
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+  }
+
+  .center-column {
+    .status-label {
+      color: #657786;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .status-value {
+      color: #1DA1F2;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .right-column {
+  }
+
+
+}

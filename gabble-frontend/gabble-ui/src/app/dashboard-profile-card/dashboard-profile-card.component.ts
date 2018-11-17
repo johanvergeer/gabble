@@ -8,7 +8,8 @@ import {Profile} from "../shared/profile/profile.model";
   styleUrls: ['./dashboard-profile-card.component.scss']
 })
 export class DashboardProfileCardComponent implements OnInit {
-  profile: Profile = new Profile('', '', '', '', '', 0, 0);
+  profile: Profile;
+  website_name: string = '';
 
   constructor(private profileService: ProfileService) {
   }

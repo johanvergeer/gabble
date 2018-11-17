@@ -1,3 +1,31 @@
-<p>
-  profile-header works!
-</p>
+<div fxLayout="row" class="profile-header">
+  <div fxFlex="25%" class="left-column" fxLayoutAlign="center start">
+    <div fxFlex="90%" fxLayout="column" fxLayoutGap="10px">
+      <img class="profile-header-img" src="assets/johan-vergeer.jpeg">
+    </div>
+  </div>
+  <div fxFlex="50%" class="center-column" fxLayoutAlign="center end">
+    <div fxLayout="row" fxFlex="90%" fxLayoutAlign="start end">
+      <div fxLayout="row" fxLayoutGap="5%" *ngIf="profile">
+        <div fxFlex="33%">
+          <div class="status-label">Gabbles</div>
+          <div class="status-value">123</div>
+        </div>
+        <div fxFlex="33%">
+          <div class="status-label">Following</div>
+          <div class="status-value">{{profile.followingCount}}</div>
+        </div>
+        <div fxFlex="33%">
+          <div class="status-label">Followers</div>
+          <div class="status-value">{{profile.followersCount}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex="25%" class="right-column" fxLayoutAlign="end end">
+    <div>
+      <button mat-stroked-button color="primary">Update Profile</button>
+    </div>
+  </div>
+</div>

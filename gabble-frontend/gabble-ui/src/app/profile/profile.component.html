@@ -1,33 +1,6 @@
 <div fxLayout="column" fxLayoutGap="10px">
-  <div fxLayout="row" class="profile-header">
-    <div fxFlex="25%" class="left-column" fxLayoutAlign="center start">
-      <div fxFlex="90%" fxLayout="column" fxLayoutGap="10px">
-        <img class="profile-header-img" src="assets/johan-vergeer.jpeg">
-      </div>
-    </div>
-    <div fxFlex="50%" class="center-column" fxLayoutAlign="end end">
-      <div>
-        <div fxLayout="row" fxLayoutGap="5%">
-          <div fxFlex="33%">
-            <div class="status-label">Gabbles</div>
-            <div class="status-value">123</div>
-          </div>
-          <div fxFlex="33%">
-            <div class="status-label">Following</div>
-            <div class="status-value">8</div>
-          </div>
-          <div fxFlex="33%">
-            <div class="status-label">Followers</div>
-            <div class="status-value">10</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div fxFlex="25%" class="right-column" fxLayoutAlign="right bottom">
-      <button mat-button>Update Profile</button>
-    </div>
-  </div>
+  <app-profile-header></app-profile-header>
+  <mat-divider></mat-divider>
   <div fxLayout="row">
     <div fxFlex="25%" class="left-column" fxLayoutAlign="center start">
       <div fxFlex="90%" fxLayout="column" fxLayoutGap="10px">
@@ -37,9 +10,8 @@
     <div fxFlex="50%" class="center-column" fxLayoutAlign="center start">
       <app-timeline fxFlex="90%"></app-timeline>
     </div>
-
     <div fxFlex="25%" class="right-column">
-      right
+      <app-who-to-follow></app-who-to-follow>
     </div>
   </div>
 </div>

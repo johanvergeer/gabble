@@ -36,6 +36,7 @@ export class ProfileService implements OnInit {
       .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
       .subscribe((response) => {
         this.loggedInUserProfile = response;
+        this.loggedInUserProfile.website_name = this.loggedInUserProfile.website.replace(/(^\w+:|^)\/\//, '');
         this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
       })
   }

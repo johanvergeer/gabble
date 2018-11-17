@@ -1,6 +1,5 @@
 <mat-card class="dashboard-profile-card" *ngIf="profile">
   <mat-card-header>
-    <img mat-card-avatar src="assets/johan-vergeer.jpeg">
     <mat-card-title>{{profile.username}}</mat-card-title>
   </mat-card-header>
   <mat-card-content fxLayout="column" fxLayoutGap="5px">
@@ -20,7 +19,7 @@
       <div class="status-label">
         website
       </div>
-      <a href="{{profile.website}}" target="_blank"> {{profile.website}}</a>
+      <a href="{{profile.website}}" target="_blank" class="url"> {{profile.website_name}}</a>
     </div>
   </mat-card-content>
 </mat-card>

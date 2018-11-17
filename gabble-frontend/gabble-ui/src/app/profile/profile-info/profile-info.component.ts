@@ -9,6 +9,7 @@ import {ProfileService} from "../../shared/profile/profile.service";
 })
 export class ProfileInfoComponent implements OnInit {
   profile: Profile = new Profile('', '', '', '', '', 0, 0);
+  website_name: string = '';
 
   constructor(private profileService: ProfileService) {
   }
@@ -19,5 +20,4 @@ export class ProfileInfoComponent implements OnInit {
       this.profile = profile;
     });
   }
-
 }
