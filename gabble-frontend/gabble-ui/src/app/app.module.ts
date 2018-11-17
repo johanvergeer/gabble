@@ -11,7 +11,7 @@ import {GabblesService} from "./shared/gabbles/gabbles.service";
 import {StartPageComponent} from './start-page/start-page.component';
 import {
   MatButtonModule,
-  MatCardModule, MatDividerModule,
+  MatCardModule, MatDialogModule, MatDividerModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule, MatInputModule, MatListModule, MatMenuModule,
@@ -39,6 +39,7 @@ import {WhoToFollowComponent} from './who-to-follow/who-to-follow.component';
 import {ProfileHeaderComponent} from './profile/profile-header/profile-header.component';
 import {ProfileInfoComponent} from './profile/profile-info/profile-info.component';
 import {NotFoundComponent} from './errors/not-found/not-found.component';
+import {ProfileEditDialogComponent} from './profile/profile-edit-dialog/profile-edit-dialog.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -78,6 +79,7 @@ export function onAuthRequired({oktaAuth, router}) {
     ProfileHeaderComponent,
     ProfileInfoComponent,
     NotFoundComponent,
+    ProfileEditDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,7 @@ export function onAuthRequired({oktaAuth, router}) {
     HttpClientModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
     MatGridListModule,
@@ -105,6 +108,7 @@ export function onAuthRequired({oktaAuth, router}) {
     HttpClientModule,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
+  entryComponents: [ProfileEditDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

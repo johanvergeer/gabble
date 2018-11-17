@@ -1,5 +1,6 @@
 package com.redgyro.models
 
+import com.redgyro.dto.userprofiles.UserProfileDto
 import org.hibernate.validator.constraints.URL
 import javax.persistence.*
 import javax.validation.constraints.Size
@@ -25,4 +26,15 @@ data class UserProfile(
         inverseJoinColumns = [JoinColumn(name = "following_id", referencedColumnName = "userId", nullable = false)])
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH, CascadeType.REFRESH])
     val following = mutableSetOf<UserProfile>()
+
+    fun toDto()= UserProfileDto(
+            this.userId,
+            this.username,
+            this.bio,
+            this.location,
+            this.website,
+            this.followers.count(),
+            this.following.count()
+        )
 }
+

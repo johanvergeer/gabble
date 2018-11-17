@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Update Profile</h1>
+<div mat-dialog-content>
+  <mat-form-field >
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="profile.username" placeholder="Username" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Location</mat-label>
+    <input matInput [(ngModel)]="profile.location" placeholder="Location">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Website</mat-label>
+    <input type="url" matInput [(ngModel)]="profile.website" placeholder="Website">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Bio</mat-label>
+    <textarea matInput [(ngModel)]="profile.bio" placeholder="Bio" matTextareaAutosize></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="profile" cdkFocusInitial>Save Changes</button>
+</div>

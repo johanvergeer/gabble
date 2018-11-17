@@ -63,4 +63,8 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
 
         return findNotFollowing(followingId)
     }
+
+    fun saveUserProfile(userProfile: UserProfile) = this.userProfileRepository
+        .save(userProfile)
+        .toDto()
 }

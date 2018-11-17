@@ -37,7 +37,30 @@ export class ProfileService implements OnInit {
       .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
       .subscribe((response) => {
         this.loggedInUserProfile = new Profile(response);
-        this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
+        this.loggedInUserProfileChanged.next(this.loggedInUserProfile);
+      })
+  }
+
+  saveLoggedInUser(profile: Profile) {
+    this.httpClient.put(`http://localhost:8090/user-profiles/profile/`, profile)
+      .subscribe(
+        (val) => {
+          console.log("PUT call successful value returned in body", val);
+          this.updateLoggedInUser();
+          this.updateNotFollowing()
+        },
+        response => {
+          console.log("PUT call in error", response);
+        },
+        () => {
+          console.log("The PUT observable is now completed.");
+        });
+
+    this.httpClient
+      .put<Profile>(`http://localhost:8090/user-profiles/profile/`, profile)
+      .subscribe((response) => {
+        this.loggedInUserProfile = new Profile(response);
+        this.loggedInUserProfileChanged.next(this.loggedInUserProfile);
       })
   }
 
@@ -56,10 +79,6 @@ export class ProfileService implements OnInit {
         this.notFollowing = response;
         this.notFollowingChanged.next(this.notFollowing.slice())
       })
-  }
-
-  findByName(name: string) {
-    // return this.profiles.find(profile => profile.name === name)
   }
 
   followUser(userProfile: Profile) {

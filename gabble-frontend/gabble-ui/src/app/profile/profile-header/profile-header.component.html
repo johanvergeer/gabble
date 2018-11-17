@@ -25,7 +25,7 @@
 
   <div fxFlex="25%" class="right-column" fxLayoutAlign="end end">
     <div *ngIf="canUpdate">
-      <button mat-stroked-button color="primary">Update Profile</button>
+      <button mat-stroked-button color="primary" (click)="openDialog()">Update Profile</button>
     </div>
   </div>
 </div>

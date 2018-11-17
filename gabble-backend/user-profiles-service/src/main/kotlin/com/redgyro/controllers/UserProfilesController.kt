@@ -3,7 +3,6 @@ package com.redgyro.controllers
 import com.redgyro.auth.getUserId
 import com.redgyro.models.UserProfile
 import com.redgyro.services.UserProfileService
-import javassist.tools.web.BadHttpRequest
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
@@ -22,6 +21,10 @@ class UserProfilesController(private val userProfileService: UserProfileService)
 
     @GetMapping(value = ["/profile/"])
     fun getProfileForLoggedInUser(principal: Principal) = userProfileService.findUserById(principal.getUserId())
+
+    @PutMapping(value = ["/profile/"])
+    fun updateProfileForLoggedInUser(@RequestBody userProfile: UserProfile, principal: Principal) =
+        userProfileService.saveUserProfile(userProfile)
 
     @GetMapping(value = ["/profile/not-following/"])
     fun getNotFollowing(principal: Principal) = userProfileService.findNotFollowing(principal.getUserId())
