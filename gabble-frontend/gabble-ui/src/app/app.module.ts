@@ -29,21 +29,24 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler} from "@ang
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileService} from "./shared/profile/profile.service";
 import {TitleBarComponent} from './title-bar/title-bar.component';
-import { MentionsPageComponent } from './mentions-page/mentions-page.component';
-import { DashboardProfileCardComponent } from './dashboard-profile-card/dashboard-profile-card.component';
-import { TrendsComponent } from './trends/trends.component';
-import { TimelineComponent } from './timeline/timeline.component';
-import { TimelineGabbleBoxComponent } from './timeline/timeline-gabble-box/timeline-gabble-box.component';
-import { TimelineGabblesComponent } from './timeline/timeline-gabbles/timeline-gabbles.component';
-import { WhoToFollowComponent } from './who-to-follow/who-to-follow.component';
-import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
-import { ProfileInfoComponent } from './profile/profile-info/profile-info.component';
+import {MentionsPageComponent} from './mentions-page/mentions-page.component';
+import {DashboardProfileCardComponent} from './dashboard-profile-card/dashboard-profile-card.component';
+import {TrendsComponent} from './trends/trends.component';
+import {TimelineComponent} from './timeline/timeline.component';
+import {TimelineGabbleBoxComponent} from './timeline/timeline-gabble-box/timeline-gabble-box.component';
+import {TimelineGabblesComponent} from './timeline/timeline-gabbles/timeline-gabbles.component';
+import {WhoToFollowComponent} from './who-to-follow/who-to-follow.component';
+import {ProfileHeaderComponent} from './profile/profile-header/profile-header.component';
+import {ProfileInfoComponent} from './profile/profile-info/profile-info.component';
+import {NotFoundComponent} from './errors/not-found/not-found.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'mentions', component: MentionsPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'implicit/callback', component: OktaCallbackComponent},
-  {path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard]}
+  {path: 'profile/:id', component: ProfileComponent, canActivate: [OktaAuthGuard]},
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '/404'}
 ];
 
 const oktaConfig = {
@@ -74,6 +77,7 @@ export function onAuthRequired({oktaAuth, router}) {
     WhoToFollowComponent,
     ProfileHeaderComponent,
     ProfileInfoComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
