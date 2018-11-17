@@ -36,7 +36,7 @@ export class ProfileService implements OnInit {
     this.httpClient
       .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
       .subscribe((response) => {
-        this.loggedInUserProfile = response;
+        this.loggedInUserProfile = new Profile(response);
         this.loggedInUserProfileChanged.next(this.loggedInUserProfile)
       })
   }

@@ -10,8 +10,14 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ProfileHeaderComponent implements OnInit {
   profile: Profile;
+  loggedInUserProfile: Profile;
 
   constructor(private profileService: ProfileService, private activatedRoute: ActivatedRoute) {
+  }
+
+  public get canUpdate() {
+    if (this.loggedInUserProfile && this.profile)
+      return this.loggedInUserProfile.userId == this.profile.userId;
   }
 
   ngOnInit() {
@@ -20,6 +26,11 @@ export class ProfileHeaderComponent implements OnInit {
       this.profileService.findById(userId).subscribe(profile => {
         this.profile = profile;
       });
+    });
+
+    this.loggedInUserProfile = this.profileService.findForLoggedInUser();
+    this.profileService.loggedInUserProfileChanged.subscribe((profile) => {
+      this.loggedInUserProfile = profile;
     });
   }
 }
