@@ -42,6 +42,7 @@ import {NotFoundComponent} from './errors/not-found/not-found.component';
 import {ProfileEditDialogComponent} from './profile/profile-edit-dialog/profile-edit-dialog.component';
 import {ProfileFollowingComponent} from './profile/profile-following/profile-following.component';
 import { ProfileFollowersComponent } from './profile/profile-followers/profile-followers.component';
+import { ProfileGabblesComponent } from './profile/profile-gabbles/profile-gabbles.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -52,7 +53,7 @@ const appRoutes: Routes = [
     component: ProfileComponent,
     canActivate: [OktaAuthGuard],
     children: [
-      {path: '', component: TimelineComponent},
+      {path: '', component: ProfileGabblesComponent},
       {path: 'following', component: ProfileFollowingComponent},
       {path: 'followers', component: ProfileFollowersComponent}
     ]
@@ -93,6 +94,7 @@ export function onAuthRequired({oktaAuth, router}) {
     ProfileEditDialogComponent,
     ProfileFollowingComponent,
     ProfileFollowersComponent,
+    ProfileGabblesComponent,
   ],
   imports: [
     BrowserModule,

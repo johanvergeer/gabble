@@ -20,10 +20,10 @@ class GabbleController(private val gabbleService: GabbleService) {
     @GetMapping
     fun getAllGabbles(): List<Gabble> = gabbleService.findAllGabbles()
 
-//    @GetMapping
-//    fun getAllGabblesForUser(@RequestParam userId: String): List<Gabble> = gabbleService.findByUserId(userId)
+    @GetMapping(value = ["/{userId}/"])
+    fun getAllGabblesForUser(@RequestParam userId: String): List<Gabble> = gabbleService.findByUserId(userId)
 
-    @PostMapping(value = ["/{gabbleId}/likes/{userId}"])
+    @PostMapping(value = ["/{gabbleId}/likes/{userId}/"])
     fun addLikeToGabble(@PathVariable gabbleId: String, @PathVariable userId: String) {
         gabbleService.addLikeToGabble(gabbleId, userId)
     }

@@ -22,10 +22,7 @@ dependencies {
     springBootStarter("tomcat")
     springBootStarter("web")
 
-//    springCloud("config-client")
     springCloud("starter-netflix-eureka-client")
-//    springCloud("starter-netflix-zuul")
-//    springCloud("starter-sleuth")
 
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE")
 

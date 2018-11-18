@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {Profile} from "./profile.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
-import {flatMap, map} from "rxjs/operators";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class ProfileService implements OnInit {

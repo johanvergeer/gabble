@@ -23,10 +23,7 @@ dependencies {
     springBootStarter("web")
     springBootStarter("thymeleaf")
 
-//    springCloud("config-client")
     springCloud("starter-netflix-eureka-client")
-//    springCloud("starter-netflix-zuul")
-//    springCloud("starter-sleuth")
 
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE")
 
@@ -40,6 +37,8 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE")
     testCompile("io.rest-assured:rest-assured:3.2.0")
     testCompile("org.hamcrest:hamcrest-all:1.3")
+
+    compile(project(":gabble-backend:gabble-models"))
 }
 
 val test by tasks.getting(Test::class) {
