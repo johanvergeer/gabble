@@ -17,7 +17,16 @@ class UserProfilesController(private val userProfileService: UserProfileService)
     fun getAllUserProfiles(): List<UserProfile> = userProfileService.findAllUserProfiles()
 
     @GetMapping(value = ["/{userId}/"])
-    fun getUserProfile(@PathVariable userId: String) = userProfileService.findUserById(userId)
+    fun getUserProfile(@PathVariable userId: String) =
+        userProfileService.findUserById(userId)
+
+    @GetMapping(value = ["/{userId}/following/"])
+    fun getUserFollowing(@PathVariable userId: String) =
+        userProfileService.findUserFollowing(userId)
+
+    @GetMapping(value = ["/{userId}/followers/"])
+    fun getUserFollowers(@PathVariable userId: String) =
+        userProfileService.findUserFollowers(userId)
 
     @GetMapping(value = ["/profile/"])
     fun getProfileForLoggedInUser(principal: Principal) = userProfileService.findUserById(principal.getUserId())

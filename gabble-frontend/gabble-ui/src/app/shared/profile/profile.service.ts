@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {Profile} from "./profile.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
-import {map} from "rxjs/operators";
+import {flatMap, map} from "rxjs/operators";
 
 @Injectable()
 export class ProfileService implements OnInit {
@@ -22,6 +22,18 @@ export class ProfileService implements OnInit {
     return this.httpClient
       .get<Profile>(`http://localhost:8090/user-profiles/${userId}/`)
       .pipe(map(res => new Profile(res)))
+  }
+
+  findFollowingById(userId: string): Observable<Profile[]> {
+    return this.httpClient
+      .get<Profile[]>(`http://localhost:8090/user-profiles/${userId}/following/`)
+      .pipe(map( res => res.map(profile => new Profile(profile))))
+  }
+
+  findFollowersById(userId: string): Observable<Profile[]> {
+    return this.httpClient
+      .get<Profile[]>(`http://localhost:8090/user-profiles/${userId}/followers/`)
+      .pipe(map( res => res.map(profile => new Profile(profile))))
   }
 
   findForLoggedInUser(): Profile {

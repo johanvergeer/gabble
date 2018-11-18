@@ -67,4 +67,16 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
     fun saveUserProfile(userProfile: UserProfile) = this.userProfileRepository
         .save(userProfile)
         .toDto()
+
+    fun findUserFollowing(userId: String): Collection<UserProfileDto> = this.userProfileRepository
+        .findById(userId)
+        .orElseThrow { UserProfileNotFoundException(userId) }
+        .following
+        .map { it.toDto() }
+
+    fun findUserFollowers(userId: String): Collection<UserProfileDto> = this.userProfileRepository
+        .findById(userId)
+        .orElseThrow { UserProfileNotFoundException(userId) }
+        .followers
+        .map { it.toDto() }
 }
