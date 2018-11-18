@@ -40,12 +40,23 @@ import {ProfileHeaderComponent} from './profile/profile-header/profile-header.co
 import {ProfileInfoComponent} from './profile/profile-info/profile-info.component';
 import {NotFoundComponent} from './errors/not-found/not-found.component';
 import {ProfileEditDialogComponent} from './profile/profile-edit-dialog/profile-edit-dialog.component';
+import {ProfileFollowingComponent} from './profile/profile-following/profile-following.component';
+import { ProfileFollowersComponent } from './profile/profile-followers/profile-followers.component';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'mentions', component: MentionsPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'implicit/callback', component: OktaCallbackComponent},
-  {path: 'profile/:id', component: ProfileComponent, canActivate: [OktaAuthGuard]},
+  {
+    path: 'profile/:id',
+    component: ProfileComponent,
+    canActivate: [OktaAuthGuard],
+    children: [
+      {path: '', component: TimelineComponent},
+      {path: 'following', component: ProfileFollowingComponent},
+      {path: 'followers', component: ProfileFollowersComponent}
+    ]
+  },
   {path: '404', component: NotFoundComponent},
   {path: '**', redirectTo: '/404'}
 ];
@@ -80,6 +91,8 @@ export function onAuthRequired({oktaAuth, router}) {
     ProfileInfoComponent,
     NotFoundComponent,
     ProfileEditDialogComponent,
+    ProfileFollowingComponent,
+    ProfileFollowersComponent,
   ],
   imports: [
     BrowserModule,

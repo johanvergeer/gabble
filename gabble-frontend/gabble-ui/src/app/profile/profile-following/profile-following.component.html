@@ -1,0 +1,11 @@
+<div fxLayout="column" fxLayoutGap="10px">
+  <mat-card *ngFor="let userProfile of following">
+    <mat-card-header>
+      <img mat-card-avatar src="assets/johan-vergeer.jpeg">
+      <mat-card-title>{{userProfile.username}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-button routerLink="/profile/{{userProfile.userId}}">View Profile</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

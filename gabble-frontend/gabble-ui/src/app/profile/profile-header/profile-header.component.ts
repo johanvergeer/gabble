@@ -30,13 +30,6 @@ export class ProfileHeaderComponent implements OnInit {
       this.profileService.findById(userId).subscribe(profile => {
         this.profile = profile;
       });
-      this.profileService.findFollowingById(userId).subscribe(profiles => {
-        console.log('following => ', profiles)
-      });
-      this.profileService.findFollowersById(userId).subscribe(profiles => {
-        console.log('followers => ', profiles)
-      });
-
     });
 
     this.loggedInUserProfile = this.profileService.findForLoggedInUser();

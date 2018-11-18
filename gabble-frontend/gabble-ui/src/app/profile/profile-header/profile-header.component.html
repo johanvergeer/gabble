@@ -8,15 +8,36 @@
     <div fxLayout="row" fxFlex="90%" fxLayoutAlign="start end">
       <div fxLayout="row" fxLayoutGap="5%" *ngIf="profile">
         <div fxFlex="33%">
-          <div class="status-label">Gabbles</div>
+          <button
+            mat-button
+            routerLink="/profile/{{profile.userId}}"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="status-label">
+            Gabbles
+          </button>
           <div class="status-value">123</div>
         </div>
         <div fxFlex="33%">
-          <div class="status-label">Following</div>
+          <button
+            mat-button
+            routerLink="/profile/{{profile.userId}}/following"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="status-label">
+            Following
+          </button>
           <div class="status-value">{{profile.followingCount}}</div>
         </div>
         <div fxFlex="33%">
-          <div class="status-label">Followers</div>
+          <button
+            mat-button
+            routerLink="/profile/{{profile.userId}}/followers"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="status-label">
+            Followers
+          </button>
           <div class="status-value">{{profile.followersCount}}</div>
         </div>
       </div>
