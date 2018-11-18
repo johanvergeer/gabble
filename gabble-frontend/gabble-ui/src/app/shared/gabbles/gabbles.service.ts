@@ -20,13 +20,9 @@ export class GabblesService implements OnInit {
 
   }
 
-  findByUserId(userId: string) {
+  findByUserId(userId: string): Observable<Gabble[]> {
     return this.httpClient
-      .get(`http://localhost:8080/${userId}`)
-      .subscribe(res => {
-        console.log(res)
-      })
-    // .get<Gabble[]>(`http://localhost:8080/gabbles/${userId}/`)
-    // .pipe(map( res => res.map(gabble => new Gabble(gabble))))
+      .get<Gabble[]>(`http://localhost:8080/${userId}`)
+      .pipe(map(res => res.map(gabble => new Gabble(gabble))))
   }
 }

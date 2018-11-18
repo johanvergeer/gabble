@@ -43,6 +43,8 @@ import {ProfileEditDialogComponent} from './profile/profile-edit-dialog/profile-
 import {ProfileFollowingComponent} from './profile/profile-following/profile-following.component';
 import { ProfileFollowersComponent } from './profile/profile-followers/profile-followers.component';
 import { ProfileGabblesComponent } from './profile/profile-gabbles/profile-gabbles.component';
+import {registerLocaleData} from "@angular/common";
+import localeNl from '@angular/common/locales/nl';
 
 const appRoutes: Routes = [
   {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
@@ -72,6 +74,8 @@ export function onAuthRequired({oktaAuth, router}) {
   // Redirect the user to your custom login page
   router.navigate(['/login']);
 }
+
+registerLocaleData(localeNl, 'nl-NL');
 
 @NgModule({
   declarations: [
