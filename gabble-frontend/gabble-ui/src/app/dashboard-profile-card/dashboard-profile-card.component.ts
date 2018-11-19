@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from "../shared/profile/profile.service";
 import {Profile} from "../shared/profile/profile.model";
+import {GabblesService} from "../shared/gabbles/gabbles.service";
 
 @Component({
   selector: 'app-dashboard-profile-card',
@@ -9,15 +10,20 @@ import {Profile} from "../shared/profile/profile.model";
 })
 export class DashboardProfileCardComponent implements OnInit {
   profile: Profile;
-  website_name: string = '';
+  gabblesCount: number;
 
-  constructor(private profileService: ProfileService) {
+  constructor(
+    private profileService: ProfileService,
+    private gabblesService: GabblesService) {
   }
 
   ngOnInit() {
     this.profile = this.profileService.findForLoggedInUser();
     this.profileService.loggedInUserProfileChanged.subscribe((profile) => {
       this.profile = profile;
+
+      this.gabblesService.findByUserId(this.profile.userId).subscribe(gabbles =>
+        this.gabblesCount = gabbles.length)
     });
   }
 }
