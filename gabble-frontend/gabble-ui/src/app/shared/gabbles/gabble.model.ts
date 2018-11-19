@@ -6,7 +6,5 @@ export class Gabble {
 
   constructor(obj?: any) {
     Object.assign(this, obj);
-    console.log(this.createdOn.toString());
-    // this.createdOn = new Date(obj.createdOn)
   }
 }
