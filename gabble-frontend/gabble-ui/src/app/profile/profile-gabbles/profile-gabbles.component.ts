@@ -32,7 +32,6 @@ export class ProfileGabblesComponent implements OnInit {
         .subscribe(gabbles => {
           console.log(typeof gabbles[0].createdOn);
           this.gabbles = gabbles;
-          // console.log(this.gabbles);
         });
     });
   }

@@ -4,6 +4,7 @@ import {ProfileService} from "../../shared/profile/profile.service";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material";
 import {ProfileEditDialogComponent} from "../profile-edit-dialog/profile-edit-dialog.component";
+import {GabblesService} from "../../shared/gabbles/gabbles.service";
 
 @Component({
   selector: 'app-profile-header',
@@ -13,8 +14,10 @@ import {ProfileEditDialogComponent} from "../profile-edit-dialog/profile-edit-di
 export class ProfileHeaderComponent implements OnInit {
   profile: Profile;
   loggedInUserProfile: Profile;
+  gabblesCount: number;
 
   constructor(private profileService: ProfileService,
+              private gabblesService: GabblesService,
               private activatedRoute: ActivatedRoute,
               private dialog: MatDialog) {
   }
@@ -30,6 +33,11 @@ export class ProfileHeaderComponent implements OnInit {
       this.profileService.findById(userId).subscribe(profile => {
         this.profile = profile;
       });
+
+      this.gabblesService.findByUserId(userId)
+        .subscribe(gabbles => {
+          this.gabblesCount = gabbles.length;
+        });
     });
 
     this.loggedInUserProfile = this.profileService.findForLoggedInUser();
