@@ -1,5 +1,6 @@
 <form>
   <mat-form-field fxFlex="grow">
-    <input matInput placeholder="What's up?">
+    <input matInput placeholder="What's up?" [(ngModel)]="gabbleText" name="gabbleText">
   </mat-form-field>
+  <button mat-button (click)="onSaveGabble()">Gabble</button>
 </form>

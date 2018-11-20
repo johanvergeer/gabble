@@ -10,7 +10,7 @@ import {GabblesService} from "../shared/gabbles/gabbles.service";
 })
 export class DashboardProfileCardComponent implements OnInit {
   profile: Profile;
-  gabblesCount: number;
+  gabblesCount: number = 9;
 
   constructor(
     private profileService: ProfileService,
@@ -22,8 +22,9 @@ export class DashboardProfileCardComponent implements OnInit {
     this.profileService.loggedInUserProfileChanged.subscribe((profile) => {
       this.profile = profile;
 
-      this.gabblesService.findByUserId(this.profile.userId).subscribe(gabbles =>
-        this.gabblesCount = gabbles.length)
+      this.gabblesService.gabblesCountForLoggedInUserChanged.subscribe(count => {
+        this.gabblesCount = count;
+      });
     });
   }
 }
