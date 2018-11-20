@@ -16,6 +16,9 @@ export class GabblesService implements OnInit {
   gabblesCountForLoggedInUser: number;
   gabblesCountForLoggedInUserChanged = new Subject<number>();
 
+  allTags: string[];
+  allTagsUpdated = new Subject<string[]>();
+
   constructor(private httpClient: HttpClient, private oktaAuth: OktaAuthService) {
     console.log(oktaAuth.getUser())
   }
@@ -51,6 +54,24 @@ export class GabblesService implements OnInit {
       })
   }
 
+  findAllTags() {
+    if (this.allTags) {
+      return this.allTags
+    } else {
+      this.updateAllTags()
+    }
+  }
+
+  updateAllTags() {
+    this.httpClient
+      .get<string[]>("http://localhost:8080/tags")
+      .subscribe((response) => {
+          this.allTags = response;
+          this.allTagsUpdated.next(this.allTags.slice())
+        }
+      )
+  }
+
   create(text: string, userId: string, username: string) {
     this.httpClient.post(`http://localhost:8080/`,
       {
@@ -62,6 +83,7 @@ export class GabblesService implements OnInit {
         (val) => {
           console.log("POST call successful value returned in body", val);
           this.updateGabblesForLoggedInUser(userId);
+          this.updateAllTags();
         },
         response => {
           console.log("POST call in error", response);

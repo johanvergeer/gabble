@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GabblesService} from "../shared/gabbles/gabbles.service";
 
 @Component({
   selector: 'app-trends',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trends.component.scss']
 })
 export class TrendsComponent implements OnInit {
+  tags: string[];
 
-  constructor() { }
+  constructor(private gabblesService: GabblesService) {
+  }
 
   ngOnInit() {
+    this.tags = this.gabblesService.findAllTags()
+    this.gabblesService.allTagsUpdated.subscribe(tags => {
+      this.tags = tags;
+    })
   }
 
 }
