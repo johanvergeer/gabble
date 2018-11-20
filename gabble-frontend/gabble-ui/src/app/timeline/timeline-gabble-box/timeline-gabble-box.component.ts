@@ -28,5 +28,6 @@ export class TimelineGabbleBoxComponent implements OnInit {
 
   onSaveGabble() {
     this.gabblesService.create(this.gabbleText, this.profile.userId, this.profile.username)
+    this.gabbleText = undefined;
   }
 }

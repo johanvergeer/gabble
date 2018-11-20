@@ -20,12 +20,12 @@ export class TimelineGabblesComponent implements OnInit {
     this.oktaAuth.getUser().then(user => {
       this.gabblesService.findByUserId(user.sub)
         .subscribe(gabbles => {
-          this.gabbles = gabbles;
+          this.gabbles = gabbles.reverse();
         });
 
       this.gabbles = this.gabblesService.findGabblesForLoggedInUser(user.sub);
       this.gabblesService.gabblesForLoggedInUserChanged.subscribe(gabbles => {
-        this.gabbles = gabbles;
+        this.gabbles = gabbles.reverse();
       })
     });
   }
