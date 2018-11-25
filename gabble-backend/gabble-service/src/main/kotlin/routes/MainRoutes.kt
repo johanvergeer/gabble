@@ -17,8 +17,9 @@ import io.ktor.routing.routing
 import service.GabbleService
 
 class MainRoutes @Inject constructor(
-    private val application: Application,
+    application: Application,
     private val gabbleService: GabbleService) {
+
     init {
         application.
             routing {
