@@ -1,6 +1,7 @@
 package com.redgyro.services
 
 import com.redgyro.dto.userprofiles.UserProfileDto
+import com.redgyro.events.UserProfileUpdateEventPublisher
 import com.redgyro.models.UserProfile
 import com.redgyro.repositories.UserProfileRepository
 import org.springframework.http.HttpStatus
@@ -14,7 +15,9 @@ class UserProfileNotFoundException(userId: String) : Exception("User profile for
 class UserIdExistsException(userId: String) : Exception("User profile for user with id $userId already exists")
 
 @Service
-class UserProfileService(private val userProfileRepository: UserProfileRepository) {
+class UserProfileService(
+    private val userProfileRepository: UserProfileRepository,
+    private val userProfileUpdateEventPublisher: UserProfileUpdateEventPublisher) {
 
     fun findAllUserProfiles() = userProfileRepository.findAll().toList()
 
@@ -67,6 +70,7 @@ class UserProfileService(private val userProfileRepository: UserProfileRepositor
     fun saveUserProfile(userProfile: UserProfile) = this.userProfileRepository
         .save(userProfile)
         .toDto()
+        .run { userProfileUpdateEventPublisher.publish(this) }
 
     fun findUserFollowing(userId: String): Collection<UserProfileDto> = this.userProfileRepository
         .findById(userId)
