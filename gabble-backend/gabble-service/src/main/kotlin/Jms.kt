@@ -1,5 +1,4 @@
-package com.redgyro
-
+import events.Event
 import org.apache.activemq.ActiveMQConnectionFactory
 import javax.jms.Message
 import javax.jms.Session
