@@ -16,6 +16,7 @@ fun DependencyHandlerScope.springBootStarter(module: String) = this.springBoot("
 dependencies {
     springBoot("devtools")
 
+    springBootStarter("activemq")
     springBootStarter("actuator")
     springBootStarter("data-jpa")
     springBootStarter("security")
@@ -29,6 +30,8 @@ dependencies {
     compile("com.google.code.gson:gson:2.8.5") // Added because of issues with starter-netflix-eureka-client
     compile("io.jsonwebtoken:jjwt:0.9.1")
     compile("org.postgresql:postgresql:42.2.5")
+    compile("org.apache.activemq:activemq-broker:5.15.8")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.9.7")
 
     testCompile("org.junit.jupiter:junit-jupiter-api:5.3.1")
     testCompile("org.junit.jupiter:junit-jupiter-engine:5.3.1")

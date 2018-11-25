@@ -9,6 +9,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.jms.annotation.EnableJms
+import org.springframework.jms.support.converter.MappingJackson2MessageConverter
+import org.springframework.jms.support.converter.MessageConverter
+import org.springframework.jms.support.converter.MessageType
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
@@ -18,6 +22,10 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 import java.util.*
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory
+import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer
+import org.springframework.jms.config.JmsListenerContainerFactory
+import javax.jms.ConnectionFactory
 
 
 @SpringBootApplication
@@ -66,6 +74,29 @@ class RestConfig {
         return CorsFilter(source)
     }
 }
+
+@Configuration
+@EnableJms
+class JmsConfig {
+
+    // Only required due to defining myFactory in the receiver
+//    @Bean
+//    fun jmsConnectionFactory(
+//        connectionFactory: ConnectionFactory,
+//        configurer: DefaultJmsListenerContainerFactoryConfigurer): JmsListenerContainerFactory<*> {
+//        val factory = DefaultJmsListenerContainerFactory()
+//        configurer.configure(factory, connectionFactory)
+//        return factory
+//    }
+
+    @Bean
+    fun jacksonJmsMessageConverter(): MessageConverter = MappingJackson2MessageConverter()
+        .apply {
+            setTargetType(MessageType.TEXT)
+            setTypeIdPropertyName("_type")
+        }
+}
+
 
 @Component
 class StartUpRunner(private val userProfileService: UserProfileService, private val userProfileRepository: UserProfileRepository) : CommandLineRunner {
