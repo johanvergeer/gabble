@@ -29,6 +29,7 @@ dependencies {
     compile("io.ktor:ktor-auth-jwt:$ktor_version")
     compile("io.ktor:ktor-gson:$ktor_version")
 
+    compile("com.google.inject:guice:4.2.2")
     compile("org.apache.activemq:activemq-all:5.15.8")
 
     testCompile("io.ktor:ktor-server-tests:$ktor_version")

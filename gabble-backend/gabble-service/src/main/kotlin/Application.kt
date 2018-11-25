@@ -1,8 +1,9 @@
+import com.google.inject.Guice
 import com.redgyro.dto.gabbles.GabbleDto
-import service.GabbleService
 import config.LocalDateTimeConverter
 import exception.AuthenticationException
 import exception.AuthorizationException
+import guice.MainModule
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -19,6 +20,7 @@ import io.ktor.response.respond
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.routing
+import service.GabbleService
 import service.InMemoryGabbleService
 import java.time.LocalDateTime
 
@@ -27,6 +29,8 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.mai
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    val injector = Guice.createInjector(MainModule(this))
+
     val gabbleService: GabbleService = InMemoryGabbleService()
 
     install(CORS) {
@@ -40,7 +44,6 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(Authentication) {
-
     }
 
     install(ContentNegotiation) {
@@ -51,29 +54,12 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-    routing {
-        post("/") {
-            val gabble = call.receive<GabbleDto>()
-            call.respond(gabbleService.create(gabble))
-        }
-
-        get("/{userId}") {
-            val userId: String? = call.parameters["userId"]
-
-            if (userId == null) call.respond(HttpStatusCode.BadRequest, "userId cannot be null")
-            else call.respond(gabbleService.findByUserId(userId))
-        }
-
-        get("/tags") {
-            call.respond(gabbleService.findAllGabbleTags())
-        }
-
-        install(StatusPages) {
-            exception<AuthenticationException> { call.respond(HttpStatusCode.Unauthorized) }
-            exception<AuthorizationException> { call.respond(HttpStatusCode.Forbidden) }
-        }
+    install(StatusPages) {
+        exception<AuthenticationException> { call.respond(HttpStatusCode.Unauthorized) }
+        exception<AuthorizationException> { call.respond(HttpStatusCode.Forbidden) }
     }
 }
+
 
 
 
