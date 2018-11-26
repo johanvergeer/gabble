@@ -1,4 +1,4 @@
-package config
+package com.redgyro.gabblesservice.config
 
 import com.google.gson.*
 import java.lang.reflect.Type

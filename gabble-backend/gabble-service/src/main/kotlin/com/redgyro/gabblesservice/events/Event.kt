@@ -1,4 +1,4 @@
-package events
+package com.redgyro.gabblesservice.events
 
 /**
  * Class for creating Events

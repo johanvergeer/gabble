@@ -1,8 +1,9 @@
-import events.Event
+package com.redgyro.gabblesservice
+
+import com.redgyro.gabblesservice.events.Event
 import org.apache.activemq.ActiveMQConnectionFactory
-import javax.jms.Message
-import javax.jms.Session
-import javax.jms.TextMessage
+import javax.inject.Inject
+import javax.jms.*
 
 class UserProfileUpdateEvent(val message: String) {
     companion object : Event<UserProfileUpdateEvent>()
@@ -10,10 +11,18 @@ class UserProfileUpdateEvent(val message: String) {
     fun emit() = emit(this)
 }
 
-class UserProfileUpdateJmsSubscriber {
+class GabbleJmsConnectionFactory : ConnectionFactory {
+    private val connectionFactory = ActiveMQConnectionFactory("tcp://localhost:61616")
+
+    override fun createConnection(userName: String?, password: String?): Connection =
+        connectionFactory.createConnection(userName, password)
+
+    override fun createConnection(): Connection = connectionFactory.createConnection()
+}
+
+class UserProfileUpdateJmsSubscriber @Inject constructor(connectionFactory: ConnectionFactory) {
     init {
-        val connectionFactory = ActiveMQConnectionFactory("tcp://localhost:61616")
-        val connection = connectionFactory.createConnection()
+        val connection: Connection = connectionFactory.createConnection()
 
         try {
             // Producer
@@ -35,7 +44,7 @@ class UserProfileUpdateJmsSubscriber {
             val consumer1 = session.createDurableSubscriber(topic, "consumer1", "", false)
             val consumer2 = session.createDurableSubscriber(topic, "consumer2", "", false)
 
-            UserProfileUpdateEvent on { println("UserProfileUpdateEvent called with ${it.message}") }
+            UserProfileUpdateEvent on { println("com.redgyro.gabblesservice.UserProfileUpdateEvent called with ${it.message}") }
 
             connection.start()
 
@@ -53,8 +62,4 @@ class UserProfileUpdateJmsSubscriber {
             connection.close()
         }
     }
-}
-
-fun main(args: Array<String>) {
-    val userProfileUpdateJmsSubscriber = UserProfileUpdateJmsSubscriber()
 }

@@ -1,3 +1,3 @@
-package exception
+package com.redgyro.gabblesservice.exception
 
 class AuthenticationException : RuntimeException()

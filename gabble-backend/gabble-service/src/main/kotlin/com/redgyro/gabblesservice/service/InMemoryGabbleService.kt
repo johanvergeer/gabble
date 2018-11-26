@@ -1,7 +1,7 @@
-package service
+package com.redgyro.gabblesservice.service
 
 import com.redgyro.dto.gabbles.GabbleDto
-import randomUUID
+import com.redgyro.gabblesservice.randomUUID
 import java.time.LocalDateTime
 
 class InMemoryGabbleService : GabbleService {

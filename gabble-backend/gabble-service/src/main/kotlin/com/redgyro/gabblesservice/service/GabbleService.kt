@@ -1,4 +1,4 @@
-package service
+package com.redgyro.gabblesservice.service
 
 import com.redgyro.dto.gabbles.GabbleDto
 

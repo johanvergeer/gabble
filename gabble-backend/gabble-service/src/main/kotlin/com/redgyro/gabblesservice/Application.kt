@@ -1,9 +1,11 @@
+package com.redgyro.gabblesservice
+
 import com.google.inject.Guice
-import com.redgyro.dto.gabbles.GabbleDto
-import config.LocalDateTimeConverter
-import exception.AuthenticationException
-import exception.AuthorizationException
-import guice.MainModule
+import com.redgyro.gabblesservice.config.LocalDateTimeConverter
+import com.redgyro.gabblesservice.exception.AuthenticationException
+import com.redgyro.gabblesservice.exception.AuthorizationException
+import com.redgyro.gabblesservice.guice.JmsModule
+import com.redgyro.gabblesservice.guice.MainModule
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -15,13 +17,7 @@ import io.ktor.gson.gson
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.receive
 import io.ktor.response.respond
-import io.ktor.routing.get
-import io.ktor.routing.post
-import io.ktor.routing.routing
-import service.GabbleService
-import service.InMemoryGabbleService
 import java.time.LocalDateTime
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.main(args)
@@ -29,7 +25,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.mai
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    Guice.createInjector(MainModule(this))
+    Guice.createInjector(MainModule(this), JmsModule())
 
     install(CORS) {
         method(HttpMethod.Options)
