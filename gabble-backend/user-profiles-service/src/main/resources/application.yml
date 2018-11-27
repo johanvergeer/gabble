@@ -1,4 +1,7 @@
 spring:
+  jms:
+    pub-sub-domain: true # specifies that the default destination is a topic.
+
   jpa:
     show-sql: true
   application:

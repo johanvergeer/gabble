@@ -1,15 +1,11 @@
 package com.redgyro.gabblesservice
 
-import com.redgyro.gabblesservice.events.Event
 import org.apache.activemq.ActiveMQConnectionFactory
 import javax.inject.Inject
-import javax.jms.*
+import javax.jms.Connection
+import javax.jms.ConnectionFactory
+import javax.jms.Session
 
-class UserProfileUpdateEvent(val message: String) {
-    companion object : Event<UserProfileUpdateEvent>()
-
-    fun emit() = emit(this)
-}
 
 class GabbleJmsConnectionFactory : ConnectionFactory {
     private val connectionFactory = ActiveMQConnectionFactory("tcp://localhost:61616")
@@ -25,36 +21,22 @@ class UserProfileUpdateJmsSubscriber @Inject constructor(connectionFactory: Conn
         val connection: Connection = connectionFactory.createConnection()
 
         try {
-            // Producer
             connection.clientID = "DurabilityTest"
-            val session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-            val topic = session.createTopic("customerTopic")
+            val session: Session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+            val userProfileUpdateTopic = session.createTopic("userProfileUpdateTopic")
 
-            // Publish
-            val payload = "Important Task"
-            val msg = session.createTextMessage(payload)
-            val publisher = session.createProducer(topic)
-            println("sending text '$payload'")
-            publisher.send(
-                msg,
-                javax.jms.DeliveryMode.PERSISTENT,
-                javax.jms.Message.DEFAULT_PRIORITY,
-                Message.DEFAULT_TIME_TO_LIVE)
+            val consumer1 = session.createDurableSubscriber(userProfileUpdateTopic, "userProfileUpdatesConsumer", "", false)
 
-            val consumer1 = session.createDurableSubscriber(topic, "consumer1", "", false)
-            val consumer2 = session.createDurableSubscriber(topic, "consumer2", "", false)
-
-            UserProfileUpdateEvent on { println("com.redgyro.gabblesservice.UserProfileUpdateEvent called with ${it.message}") }
+//            UserProfileUpdateEvent on { println("com.redgyro.gabblesservice.UserProfileUpdateEvent called with ${it.message}") }
 
             connection.start()
 
             while (true) {
-                val consumer1Msg = consumer1.receive() as TextMessage
-                println("Consumer 1 receives '${consumer1Msg.text}'")
+                val consumer1Msg = consumer1.receive()
 
-                val consumer2Msg = consumer2.receive() as TextMessage
-                UserProfileUpdateEvent(consumer2Msg.text).emit()
-                println("Consumer 2 receives '${consumer2Msg.text}'")
+                println(consumer1Msg)
+
+//                UserProfileUpdateEvent(consumer1Msg).emit()
             }
 
             session.close()
@@ -62,4 +44,8 @@ class UserProfileUpdateJmsSubscriber @Inject constructor(connectionFactory: Conn
             connection.close()
         }
     }
+}
+
+fun main(args: Array<String>) {
+    UserProfileUpdateJmsSubscriber(GabbleJmsConnectionFactory())
 }

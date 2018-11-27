@@ -3,6 +3,7 @@ package com.redgyro
 import com.redgyro.models.UserProfile
 import com.redgyro.repositories.UserProfileRepository
 import com.redgyro.services.UserProfileService
+import org.apache.activemq.ActiveMQConnectionFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
@@ -10,6 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jms.annotation.EnableJms
+import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter
 import org.springframework.jms.support.converter.MessageType
@@ -22,9 +24,6 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 import java.util.*
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory
-import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer
-import org.springframework.jms.config.JmsListenerContainerFactory
 import javax.jms.ConnectionFactory
 
 
@@ -37,8 +36,6 @@ fun main(args: Array<String>) {
         .sources(ProfilesServiceApplication::class.java)
         .run(*args)
 }
-
-fun randomUUIDAsString() = UUID.randomUUID().toString()
 
 @Configuration
 @EnableResourceServer
@@ -79,15 +76,19 @@ class RestConfig {
 @EnableJms
 class JmsConfig {
 
-    // Only required due to defining myFactory in the receiver
-//    @Bean
-//    fun jmsConnectionFactory(
-//        connectionFactory: ConnectionFactory,
-//        configurer: DefaultJmsListenerContainerFactoryConfigurer): JmsListenerContainerFactory<*> {
-//        val factory = DefaultJmsListenerContainerFactory()
-//        configurer.configure(factory, connectionFactory)
-//        return factory
-//    }
+    @Bean
+    fun jmsConnectionFactory() = ActiveMQConnectionFactory().apply {
+        brokerURL = "tcp://localhost:61616"
+        userName = "admin"
+        password = "admin"
+    }
+
+    @Bean
+    fun jmsTemplate() = JmsTemplate().apply {
+        connectionFactory = jmsConnectionFactory()
+        messageConverter = jacksonJmsMessageConverter()
+        isPubSubDomain = true
+    }
 
     @Bean
     fun jacksonJmsMessageConverter(): MessageConverter = MappingJackson2MessageConverter()

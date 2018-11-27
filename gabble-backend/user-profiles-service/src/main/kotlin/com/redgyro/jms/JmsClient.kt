@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class UserProfileUpdateJmsPublisher(private val jmsTemplate: JmsTemplate) : ApplicationListener<UserProfileUpdateEvent> {
     override fun onApplicationEvent(event: UserProfileUpdateEvent) {
-        jmsTemplate.convertAndSend("UserProfileUpdateQueue", event.userProfileDto)
+        jmsTemplate.convertAndSend("userProfileUpdateTopic", event.userProfileDto)
     }
 }
 
