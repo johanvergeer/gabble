@@ -67,10 +67,28 @@ class UserProfileService(
         return findNotFollowing(followingId)
     }
 
-    fun saveUserProfile(userProfile: UserProfile) = this.userProfileRepository
-        .save(userProfile)
-        .toDto()
-        .run { userProfileUpdateEventPublisher.publish(this) }
+    fun saveUserProfile(userProfile: UserProfile): UserProfileDto {
+        // Find current user profile so we also have all relations
+        val currentProfile = this.userProfileRepository
+            .findById(userProfile.userId)
+            .orElseThrow { UserProfileNotFoundException(userProfile.userId) }
+
+        val profileToSave = currentProfile
+            .copy(
+                username = userProfile.username,
+                bio = userProfile.bio,
+                location = userProfile.location,
+                website = userProfile.website
+            ).apply {
+                following.addAll(currentProfile.following)
+                followers.addAll(currentProfile.followers)
+            }
+
+        val savedProfileDto = this.userProfileRepository.save(profileToSave).toDto()
+
+        userProfileUpdateEventPublisher.publish(savedProfileDto)
+        return savedProfileDto
+    }
 
     fun findUserFollowing(userId: String): Collection<UserProfileDto> = this.userProfileRepository
         .findById(userId)
