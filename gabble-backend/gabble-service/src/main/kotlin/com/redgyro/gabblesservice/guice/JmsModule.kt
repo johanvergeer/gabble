@@ -14,7 +14,6 @@ class JmsModule(
         bind(Session::class.java).toInstance(session)
         bind(Connection::class.java).toInstance(connection)
         bind(Destination::class.java).toInstance(destination)
-        bind(GuiceJmsTemplate::class.java).to(GuiceJmsTemplateImpl::class.java)
     }
 
     companion object {
