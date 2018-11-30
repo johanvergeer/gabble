@@ -22,7 +22,7 @@ dependencies {
     springBootStarter("security")
     springBootStarter("web")
 
-    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE")
+    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion")
 
     compile("io.jsonwebtoken:jjwt:0.9.1")
     compile("org.postgresql:postgresql:42.2.5")
@@ -33,7 +33,7 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-engine:5.3.1")
     testCompile("io.kotlintest:kotlintest-runner-junit5:3.1.10")
     testCompile("io.kotlintest:kotlintest-extensions-spring:3.1.10")
-    testCompile("org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE")
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testCompile("io.rest-assured:rest-assured:3.2.0")
     testCompile("org.hamcrest:hamcrest-all:1.3")
     testCompile("com.h2database:h2:1.4.197")

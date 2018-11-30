@@ -3,27 +3,10 @@ package com.redgyro
 import com.redgyro.models.UserProfile
 import com.redgyro.repositories.UserProfileRepository
 import com.redgyro.services.UserProfileService
-import org.apache.activemq.ActiveMQConnectionFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.jms.annotation.EnableJms
-import org.springframework.jms.core.JmsTemplate
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter
-import org.springframework.jms.support.converter.MessageConverter
-import org.springframework.jms.support.converter.MessageType
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
-import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher
 import org.springframework.stereotype.Component
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
-import java.util.*
-import javax.jms.ConnectionFactory
 
 
 @SpringBootApplication
@@ -33,67 +16,6 @@ fun main(args: Array<String>) {
     SpringApplicationBuilder()
         .sources(ProfilesServiceApplication::class.java)
         .run(*args)
-}
-
-@Configuration
-@EnableResourceServer
-class ResourceServerConfig : ResourceServerConfigurerAdapter() {
-
-    @Throws(Exception::class)
-    override fun configure(http: HttpSecurity) {
-        http.requestMatcher(RequestHeaderRequestMatcher("Authorization"))
-            .authorizeRequests()
-            .anyRequest()
-            .fullyAuthenticated()
-    }
-}
-
-@Configuration
-class RestConfig {
-
-    @Bean
-    fun corsFilter(): CorsFilter {
-        val source = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration().apply {
-            allowCredentials = true
-            addAllowedOrigin("*")
-            addAllowedHeader("*")
-            addAllowedMethod("OPTIONS")
-            addAllowedMethod("GET")
-            addAllowedMethod("POST")
-            addAllowedMethod("PUT")
-            addAllowedMethod("DELETE")
-        }
-
-        source.registerCorsConfiguration("/**", config)
-        return CorsFilter(source)
-    }
-}
-
-@Configuration
-@EnableJms
-class JmsConfig {
-
-    @Bean
-    fun jmsConnectionFactory() = ActiveMQConnectionFactory().apply {
-        brokerURL = "tcp://localhost:61616"
-        userName = "admin"
-        password = "admin"
-    }
-
-    @Bean
-    fun jmsTemplate() = JmsTemplate().apply {
-        connectionFactory = jmsConnectionFactory()
-        messageConverter = jacksonJmsMessageConverter()
-        isPubSubDomain = true
-    }
-
-    @Bean
-    fun jacksonJmsMessageConverter(): MessageConverter = MappingJackson2MessageConverter()
-        .apply {
-            setTargetType(MessageType.TEXT)
-            setTypeIdPropertyName("_type")
-        }
 }
 
 
