@@ -1,6 +1,5 @@
 package com.redgyro.repositories
 
-import com.redgyro.dto.userprofiles.UserProfileDto
 import com.redgyro.models.UserProfile
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository

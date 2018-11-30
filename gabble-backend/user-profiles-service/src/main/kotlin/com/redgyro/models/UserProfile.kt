@@ -6,8 +6,6 @@ import javax.persistence.*
 import javax.validation.constraints.Size
 
 @Entity
-//@NamedQuery(name = "UserProfile.findNotFollowing",
-//    query = "select u from UserProfile u where :userProfile not member of u.followers")
 data class UserProfile(
     @Id
     var userId: String = "",
