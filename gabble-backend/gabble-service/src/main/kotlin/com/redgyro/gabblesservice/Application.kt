@@ -4,10 +4,7 @@ import com.google.inject.Guice
 import com.redgyro.gabblesservice.config.LocalDateTimeConverter
 import com.redgyro.gabblesservice.exception.AuthenticationException
 import com.redgyro.gabblesservice.exception.AuthorizationException
-import com.redgyro.gabblesservice.guice.JmsModule
 import com.redgyro.gabblesservice.guice.MainModule
-import com.redgyro.gabblesservice.jms.GabbleJmsConnectionFactory
-import com.redgyro.gabblesservice.jms.UserProfileMessageListener
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install

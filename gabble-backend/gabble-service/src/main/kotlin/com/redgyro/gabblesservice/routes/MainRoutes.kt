@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.redgyro.dto.gabbles.GabbleDto
 import com.redgyro.gabblesservice.exception.AuthenticationException
 import com.redgyro.gabblesservice.exception.AuthorizationException
+import com.redgyro.gabblesservice.service.GabbleService
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -14,7 +15,6 @@ import io.ktor.response.respond
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.routing
-import com.redgyro.gabblesservice.service.GabbleService
 
 class MainRoutes @Inject constructor(
     application: Application,

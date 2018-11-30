@@ -1,8 +1,6 @@
 package com.redgyro.gabblesservice.guice
 
 import com.google.inject.AbstractModule
-import com.redgyro.gabblesservice.jms.GuiceJmsTemplate
-import com.redgyro.gabblesservice.jms.GuiceJmsTemplateImpl
 import javax.jms.*
 
 /**

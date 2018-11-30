@@ -3,10 +3,10 @@ package com.redgyro.gabblesservice.guice
 import com.google.inject.AbstractModule
 import com.redgyro.gabblesservice.jms.GabbleJmsConnectionFactory
 import com.redgyro.gabblesservice.jms.UserProfileMessageListener
-import io.ktor.application.Application
 import com.redgyro.gabblesservice.routes.MainRoutes
 import com.redgyro.gabblesservice.service.GabbleService
 import com.redgyro.gabblesservice.service.InMemoryGabbleService
+import io.ktor.application.Application
 
 class MainModule(private val application: Application) : AbstractModule() {
     override fun configure() {
