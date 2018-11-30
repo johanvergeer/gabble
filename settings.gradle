@@ -2,7 +2,6 @@ rootProject.name = 'gabble'
 
 include 'gabble-backend'
 include 'gabble-backend:edge-service'
-include 'gabble-backend:eureka-naming-server'
 include 'gabble-backend:gabble-service'
 include 'gabble-backend:gabble-models'
 include 'gabble-backend:user-profiles-service'

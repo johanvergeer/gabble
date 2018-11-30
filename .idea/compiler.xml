@@ -4,8 +4,12 @@
     <bytecodeTargetLevel>
       <module name="auth-service_main" target="1.8" />
       <module name="auth-service_test" target="1.8" />
+      <module name="eureka-naming-server_main" target="1.8" />
+      <module name="eureka-naming-server_test" target="1.8" />
       <module name="gabble_main" target="1.8" />
       <module name="gabble_test" target="1.8" />
+      <module name="gabbles-service-old_main" target="1.8" />
+      <module name="gabbles-service-old_test" target="1.8" />
       <module name="gabbles-service_main" target="1.8" />
       <module name="gabbles-service_test" target="1.8" />
       <module name="profiles-service_main" target="1.8" />
