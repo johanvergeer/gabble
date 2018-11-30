@@ -5,6 +5,9 @@ import com.redgyro.gabblesservice.jms.GuiceJmsTemplate
 import com.redgyro.gabblesservice.jms.GuiceJmsTemplateImpl
 import javax.jms.*
 
+/**
+ * @see [Google Code](https://code.google.com/archive/p/guice-jms/) and [Github](https://github.com/aqingsao/i1-guice-jms)
+ */
 class JmsModule(
     private val session: Session,
     private val connection: Connection,
