@@ -20,14 +20,10 @@ dependencies {
     springBootStarter("actuator")
     springBootStarter("data-jpa")
     springBootStarter("security")
-    springBootStarter("tomcat")
     springBootStarter("web")
-
-    springCloud("starter-netflix-eureka-client")
 
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE")
 
-    compile("com.google.code.gson:gson:2.8.5") // Added because of issues with starter-netflix-eureka-client
     compile("io.jsonwebtoken:jjwt:0.9.1")
     compile("org.postgresql:postgresql:42.2.5")
     compile("org.apache.activemq:activemq-broker:5.15.8")

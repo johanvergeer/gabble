@@ -1,5 +1,6 @@
 package com.redgyro.gabblesservice
 
+import com.redgyro.gabblesservice.events.UserProfileUpdateEvent
 import org.apache.activemq.ActiveMQConnectionFactory
 import javax.inject.Inject
 import javax.jms.Connection

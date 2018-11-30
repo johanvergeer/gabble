@@ -7,7 +7,6 @@ import org.apache.activemq.ActiveMQConnectionFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jms.annotation.EnableJms
@@ -28,7 +27,6 @@ import javax.jms.ConnectionFactory
 
 
 @SpringBootApplication
-@EnableDiscoveryClient
 class ProfilesServiceApplication
 
 fun main(args: Array<String>) {
