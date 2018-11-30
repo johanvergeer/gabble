@@ -1,8 +1,8 @@
 package com.redgyro.gabblesservice.guice
 
 import com.google.inject.AbstractModule
-import com.redgyro.gabblesservice.GabbleJmsConnectionFactory
 import com.redgyro.gabblesservice.UserProfileUpdateJmsSubscriber
+import com.redgyro.gabblesservice.jms.GabbleJmsConnectionFactory
 import javax.jms.ConnectionFactory
 
 class JmsModule : AbstractModule() {

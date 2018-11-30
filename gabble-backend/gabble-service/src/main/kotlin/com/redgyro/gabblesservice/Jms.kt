@@ -1,21 +1,12 @@
 package com.redgyro.gabblesservice
 
-import com.redgyro.gabblesservice.events.UserProfileUpdateEvent
+import com.redgyro.gabblesservice.jms.GabbleJmsConnectionFactory
+import com.redgyro.gabblesservice.jms.UserProfileMessageListener
 import org.apache.activemq.ActiveMQConnectionFactory
 import javax.inject.Inject
 import javax.jms.Connection
 import javax.jms.ConnectionFactory
 import javax.jms.Session
-
-
-class GabbleJmsConnectionFactory : ConnectionFactory {
-    private val connectionFactory = ActiveMQConnectionFactory("tcp://localhost:61616")
-
-    override fun createConnection(userName: String?, password: String?): Connection =
-        connectionFactory.createConnection(userName, password)
-
-    override fun createConnection(): Connection = connectionFactory.createConnection()
-}
 
 class UserProfileUpdateJmsSubscriber @Inject constructor(connectionFactory: ConnectionFactory) {
     init {
@@ -23,22 +14,27 @@ class UserProfileUpdateJmsSubscriber @Inject constructor(connectionFactory: Conn
 
         try {
             connection.clientID = "DurabilityTest"
+
             val session: Session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+
             val userProfileUpdateTopic = session.createTopic("userProfileUpdateTopic")
 
             val consumer1 = session.createDurableSubscriber(userProfileUpdateTopic, "userProfileUpdatesConsumer", "", false)
+            consumer1.messageListener = UserProfileMessageListener()
 
 //            UserProfileUpdateEvent on { println("com.redgyro.gabblesservice.UserProfileUpdateEvent called with ${it.message}") }
 
             connection.start()
 
-            while (true) {
-                val consumer1Msg = consumer1.receive()
+            Thread.sleep(10000000)
 
-                println(consumer1Msg)
-
-//                UserProfileUpdateEvent(consumer1Msg).emit()
-            }
+//            while (true) {
+//                val consumer1Msg = consumer1.receive()
+//
+//                println(consumer1Msg)
+//
+////                UserProfileUpdateEvent(consumer1Msg).emit()
+//            }
 
             session.close()
         } finally {
