@@ -6,9 +6,11 @@ import javax.jms.MessageListener
 
 class UserProfileMessageListener : MessageListener {
     override fun onMessage(message: Message?) {
-        val textMessage = message as ActiveMQTextMessage
-        println("===========================================================")
-        println(message.text)
-        println("===========================================================")
+        if (message is ActiveMQTextMessage) {
+            println("===========================================================")
+            println(message.text)
+            println("===========================================================")
+        }
+
     }
 }

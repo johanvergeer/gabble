@@ -6,6 +6,8 @@ import com.redgyro.gabblesservice.exception.AuthenticationException
 import com.redgyro.gabblesservice.exception.AuthorizationException
 import com.redgyro.gabblesservice.guice.JmsModule
 import com.redgyro.gabblesservice.guice.MainModule
+import com.redgyro.gabblesservice.jms.GabbleJmsConnectionFactory
+import com.redgyro.gabblesservice.jms.UserProfileMessageListener
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -25,7 +27,8 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.mai
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    Guice.createInjector(MainModule(this), JmsModule())
+    Guice.createInjector(
+        MainModule(this)   )
 
     install(CORS) {
         method(HttpMethod.Options)
