@@ -10,6 +10,8 @@
       <module name="gabbles-service_test" target="1.8" />
       <module name="profiles-service_main" target="1.8" />
       <module name="profiles-service_test" target="1.8" />
+      <module name="spring-cloud-config-server_main" target="1.8" />
+      <module name="spring-cloud-config-server_test" target="1.8" />
       <module name="zuul-api-gateway-server_main" target="1.8" />
       <module name="zuul-api-gateway-server_test" target="1.8" />
     </bytecodeTargetLevel>
