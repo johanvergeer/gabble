@@ -23,17 +23,8 @@ class UserProfileService(
 
     fun findUserById(userId: String): UserProfileDto = userProfileRepository
         .findById(userId)
-        .map {
-            UserProfileDto(
-                it.userId,
-                it.username,
-                it.bio,
-                it.location,
-                it.website,
-                followersCount = it.followers.count(),
-                followingCount = it.following.count())
-        }
         .orElseThrow { UserProfileNotFoundException(userId) }
+        .toDto()
 
     fun createNewUserProfile(userProfile: UserProfile): UserProfile {
         if (userProfileRepository.findById(userProfile.userId).isPresent) throw UserIdExistsException(userProfile.userId)
@@ -43,16 +34,7 @@ class UserProfileService(
 
     fun findNotFollowing(userId: String): Set<UserProfileDto> = userProfileRepository
         .findNotFollowing(userProfileRepository.findById(userId).get())
-        .map {
-            UserProfileDto(
-                it.userId,
-                it.username,
-                it.bio,
-                it.location,
-                it.website,
-                followersCount = it.followers.count(),
-                followingCount = it.following.count())
-        }
+        .map { it.toDto() }
         .toSet()
 
     fun followUser(followerId: String, followingId: String): Set<UserProfileDto> {
