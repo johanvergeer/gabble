@@ -21,13 +21,15 @@ repositories {
 }
 
 dependencies {
-    compile("io.ktor:ktor-server-netty:$ktor_version")
     compile("ch.qos.logback:logback-classic:$logback_version")
-    compile("io.ktor:ktor-server-core:$ktor_version")
-    compile("io.ktor:ktor-server-host-common:$ktor_version")
+
     compile("io.ktor:ktor-auth:$ktor_version")
     compile("io.ktor:ktor-auth-jwt:$ktor_version")
+    compile("io.ktor:ktor-client-core:$ktor_version")
     compile("io.ktor:ktor-gson:$ktor_version")
+    compile("io.ktor:ktor-server-core:$ktor_version")
+    compile("io.ktor:ktor-server-host-common:$ktor_version")
+    compile("io.ktor:ktor-server-netty:$ktor_version")
 
     compile("com.google.code.gson:gson:2.8.5")
     compile("com.google.inject:guice:4.2.2")
