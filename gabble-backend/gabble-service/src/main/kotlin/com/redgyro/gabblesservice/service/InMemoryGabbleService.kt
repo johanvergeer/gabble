@@ -2,12 +2,17 @@ package com.redgyro.gabblesservice.service
 
 import com.google.inject.Inject
 import com.redgyro.dto.gabbles.GabbleDto
+import com.redgyro.dto.userprofiles.UserProfileDto
+import com.redgyro.gabblesservice.events.UserProfileUpdateEvent
 import com.redgyro.gabblesservice.randomUUID
 import kotlinx.coroutines.experimental.runBlocking
 import java.time.LocalDateTime
 
 class InMemoryGabbleService @Inject constructor(private val userProfileService: UserProfileService) : GabbleService {
+
     private val gabbles = mutableSetOf<GabbleDto>()
+    private val userProfilesToUserId = mutableMapOf<String, UserProfileDto>()
+    private val userProfilesToUsername = mutableMapOf<String, UserProfileDto>()
 
     init {
         runBlocking {
@@ -23,6 +28,8 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
             create(GabbleDto(text = "Gabble 3 from user frank_coenen", createdById = "00ugl9afjiwNub6yth10", createdByUsername = "frank_coenen", createdOn = LocalDateTime.now().minusHours(35)))
             create(GabbleDto(text = "Gabble 1 from user matthew_murdock", createdById = "00ugl9afjiwNub6yth11", createdByUsername = "matthew_murdock", createdOn = LocalDateTime.now().minusHours(41)))
         }
+
+        UserProfileUpdateEvent on { changeMentionedUsername(it.userProfileDto.userId, it.userProfileDto.username) }
     }
 
     override fun findByUserId(userId: String): Set<GabbleDto> {
@@ -63,9 +70,24 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
     private suspend fun GabbleDto.extractMentions(): GabbleDto {
         val mentions = this.text.split(" ")
             .filter { it -> it.startsWith("@") }
-            .map { userProfileService.findByUsername(it.drop(1)).userId }
+            .map { username -> username.drop(1) }
+            .map { username ->
+                val userProfileFromMap = userProfilesToUsername[username]
+
+                if (userProfileFromMap == null) {
+                    val userProfile = userProfileService.findByUsername(username)
+                    userProfilesToUserId[userProfile.userId] = userProfile
+                    userProfilesToUsername[userProfile.username] = userProfile
+                    userProfile.userId
+                } else
+                    userProfileFromMap.userId
+            }
             .toMutableSet()
 
         return this.copy(mentions = mentions)
+    }
+
+    override fun changeMentionedUsername(userId: String, newUserName: String) {
+        println("New username $newUserName for user with id $userId")
     }
 }
