@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {GabblesComponent} from "../gabbles/gabbles.component";
 import {GabblesService} from "../shared/gabbles/gabbles.service";
 import {OktaAuthService} from "@okta/okta-angular";
 import {Gabble} from "../shared/gabbles/gabble.model";

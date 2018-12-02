@@ -5,8 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthInterceptor} from "./shared/okta/auth.interceptor";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GabblesComponent} from './gabbles/gabbles.component';
-import {GabblesListComponent} from './gabbles/gabbles-list/gabbles-list.component';
 import {GabblesService} from "./shared/gabbles/gabbles.service";
 import {StartPageComponent} from './start-page/start-page.component';
 import {
@@ -41,14 +39,22 @@ import {ProfileInfoComponent} from './profile/profile-info/profile-info.componen
 import {NotFoundComponent} from './errors/not-found/not-found.component';
 import {ProfileEditDialogComponent} from './profile/profile-edit-dialog/profile-edit-dialog.component';
 import {ProfileFollowingComponent} from './profile/profile-following/profile-following.component';
-import { ProfileFollowersComponent } from './profile/profile-followers/profile-followers.component';
-import { ProfileGabblesComponent } from './profile/profile-gabbles/profile-gabbles.component';
+import {ProfileFollowersComponent} from './profile/profile-followers/profile-followers.component';
+import {ProfileGabblesComponent} from './profile/profile-gabbles/profile-gabbles.component';
 import {registerLocaleData} from "@angular/common";
 import localeNl from '@angular/common/locales/nl';
+import { GabbleComponent } from './gabble/gabble.component';
 
 const appRoutes: Routes = [
-  {path: '', component: StartPageComponent, canActivate: [OktaAuthGuard]},
-  {path: 'mentions', component: MentionsPageComponent, canActivate: [OktaAuthGuard]},
+  {
+    path: '',
+    component: StartPageComponent,
+    canActivate: [OktaAuthGuard],
+    children: [
+      {path: '', component: TimelineComponent},
+      {path: 'mentions', component: MentionsPageComponent},
+    ]
+  },
   {path: 'implicit/callback', component: OktaCallbackComponent},
   {
     path: 'profile/:id',
@@ -80,9 +86,7 @@ registerLocaleData(localeNl, 'nl-NL');
 @NgModule({
   declarations: [
     AppComponent,
-    GabblesComponent,
     StartPageComponent,
-    GabblesListComponent,
     ProfileComponent,
     TitleBarComponent,
     MentionsPageComponent,
@@ -99,6 +103,7 @@ registerLocaleData(localeNl, 'nl-NL');
     ProfileFollowingComponent,
     ProfileFollowersComponent,
     ProfileGabblesComponent,
+    GabbleComponent,
   ],
   imports: [
     BrowserModule,

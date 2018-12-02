@@ -1,3 +1,3 @@
-<p>
-  mentions-page works!
-</p>
+<div fxLayout="column" fxLayoutGap="10px" *ngIf="gabbles">
+  <app-gabble *ngFor="let gabble of gabbles" [gabble]="gabble" fxFlex="100%"></app-gabble>
+</div>
