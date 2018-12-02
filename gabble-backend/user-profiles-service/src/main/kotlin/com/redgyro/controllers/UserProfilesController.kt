@@ -1,6 +1,7 @@
 package com.redgyro.controllers
 
 import com.redgyro.auth.getUserId
+import com.redgyro.dto.userprofiles.UserProfileDto
 import com.redgyro.models.UserProfile
 import com.redgyro.services.UserProfileService
 import org.springframework.web.bind.annotation.*
@@ -19,6 +20,11 @@ class UserProfilesController(private val userProfileService: UserProfileService)
     @GetMapping(value = ["/{userId}/"])
     fun getUserProfile(@PathVariable userId: String) =
         userProfileService.findUserById(userId)
+
+    @GetMapping(value = ["/"])
+    fun getUserProfileByUsername(@RequestParam username: String): UserProfileDto {
+        return userProfileService.findUserByUsername(username)
+    }
 
     @GetMapping(value = ["/{userId}/following/"])
     fun getUserFollowing(@PathVariable userId: String) =

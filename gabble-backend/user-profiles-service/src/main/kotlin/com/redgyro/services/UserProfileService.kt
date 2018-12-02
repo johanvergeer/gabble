@@ -26,6 +26,11 @@ class UserProfileService(
         .orElseThrow { UserProfileNotFoundException(userId) }
         .toDto()
 
+    fun findUserByUsername(username: String): UserProfileDto = userProfileRepository
+        .findByUsername(username)
+        .orElseThrow { UserProfileNotFoundException(username) }
+        .toDto()
+
     fun createNewUserProfile(userProfile: UserProfile): UserProfile {
         if (userProfileRepository.findById(userProfile.userId).isPresent) throw UserIdExistsException(userProfile.userId)
 

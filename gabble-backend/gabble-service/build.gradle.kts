@@ -25,7 +25,10 @@ dependencies {
 
     compile("io.ktor:ktor-auth:$ktor_version")
     compile("io.ktor:ktor-auth-jwt:$ktor_version")
+    compile("io.ktor:ktor-client-apache:$ktor_version")
     compile("io.ktor:ktor-client-core:$ktor_version")
+    compile("io.ktor:ktor-client-gson:$ktor_version")
+    compile("io.ktor:ktor-client-json:$ktor_version")
     compile("io.ktor:ktor-gson:$ktor_version")
     compile("io.ktor:ktor-server-core:$ktor_version")
     compile("io.ktor:ktor-server-host-common:$ktor_version")
