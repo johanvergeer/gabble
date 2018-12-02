@@ -21,32 +21,34 @@ class MainRoutes @Inject constructor(
     private val gabbleService: GabbleService) {
 
     init {
-        application.
-            routing {
-                post("/") {
-                    val gabble = call.receive<GabbleDto>()
-                    call.respond(gabbleService.create(gabble))
-                }
-
-                get("/{userId}") {
-                    val userId: String? = call.parameters["userId"]
-
-                    if (userId == null) call.respond(HttpStatusCode.BadRequest, "userId cannot be null")
-                    else call.respond(gabbleService.findByUserId(userId))
-                }
-
-                get("/tags") {
-                    call.respond(gabbleService.findAllGabbleTags())
-                }
-
-                get("/foo") {
-                    call.respond("bar")
-                }
-
-                install(StatusPages) {
-                    exception<AuthenticationException> { call.respond(HttpStatusCode.Unauthorized) }
-                    exception<AuthorizationException> { call.respond(HttpStatusCode.Forbidden) }
-                }
+        application.routing {
+            post("/") {
+                val gabble = call.receive<GabbleDto>()
+                call.respond(gabbleService.create(gabble))
             }
+
+            get("/{userId}") {
+                val userId: String? = call.parameters["userId"]
+
+                if (userId == null) call.respond(HttpStatusCode.BadRequest, "userId cannot be null")
+                else call.respond(gabbleService.findByUserId(userId))
+            }
+
+            get("/{userId}/mentions") {
+                val userId: String? = call.parameters["userId"]
+
+                if (userId == null) call.respond(HttpStatusCode.BadRequest, "userId cannot be null")
+                else call.respond(gabbleService.findMentionedInForUser(userId))
+            }
+
+            get("/tags") {
+                call.respond(gabbleService.findAllGabbleTags())
+            }
+
+            install(StatusPages) {
+                exception<AuthenticationException> { call.respond(HttpStatusCode.Unauthorized) }
+                exception<AuthorizationException> { call.respond(HttpStatusCode.Forbidden) }
+            }
+        }
     }
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GabblesComponent} from "../gabbles/gabbles.component";
+import {GabblesService} from "../shared/gabbles/gabbles.service";
+import {OktaAuthService} from "@okta/okta-angular";
+import {Gabble} from "../shared/gabbles/gabble.model";
 
 @Component({
   selector: 'app-mentions-page',
@@ -6,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mentions-page.component.scss']
 })
 export class MentionsPageComponent implements OnInit {
+  gabbles: Gabble[];
 
-  constructor() { }
+  constructor(private gabblesService: GabblesService, private oktaAuth: OktaAuthService) {
+  }
 
   ngOnInit() {
+    this.oktaAuth.getUser().then(user => {
+      this.gabbles = this.gabblesService.findByMentionedIn(user.sub);
+      this.gabblesService.mentionsUpdated.subscribe(gabbles => {
+        this.gabbles = gabbles;
+      });
+    });
   }
 
 }

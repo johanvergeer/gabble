@@ -19,6 +19,9 @@ export class GabblesService implements OnInit {
   allTags: string[];
   allTagsUpdated = new Subject<string[]>();
 
+  mentions: Gabble[];
+  mentionsUpdated = new Subject<Gabble[]>();
+
   constructor(private httpClient: HttpClient, private oktaAuth: OktaAuthService) {
     console.log(oktaAuth.getUser())
   }
@@ -68,6 +71,24 @@ export class GabblesService implements OnInit {
       .subscribe((response) => {
           this.allTags = response;
           this.allTagsUpdated.next(this.allTags.slice())
+        }
+      )
+  }
+
+  findByMentionedIn(userId: string) {
+    if (this.mentions) {
+      return this.mentions
+    } else {
+      this.updateMentionedIn(userId)
+    }
+  }
+
+  updateMentionedIn(userId: string) {
+    this.httpClient
+      .get<Gabble[]>(`http://localhost:8080/${userId}/mentions`)
+      .subscribe((response) => {
+          this.mentions = response;
+          this.mentionsUpdated.next(this.mentions.slice())
         }
       )
   }

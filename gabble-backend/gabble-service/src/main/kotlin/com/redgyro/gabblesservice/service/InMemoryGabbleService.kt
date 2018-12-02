@@ -16,7 +16,7 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
             create(GabbleDto(text = "Gabble 3 from user johan_vergeer", createdById = "00ugl9afjiwNub6yt0h7", createdByUsername = "johan_vergeer", createdOn = LocalDateTime.now().minusHours(5)))
             create(GabbleDto(text = "Gabble 1 from user floris_bosch at @johan_vergeer", createdById = "00ugl9afjiwNub6yt0h8", createdByUsername = "floris_bosch", createdOn = LocalDateTime.now().minusHours(15)))
             create(GabbleDto(text = "Gabble 2 from user floris_bosch", createdById = "00ugl9afjiwNub6yt0h8", createdByUsername = "floris_bosch", createdOn = LocalDateTime.now().minusHours(8)))
-            create(GabbleDto(text = "Gabble 1 from user matt_damon", createdById = "00ugl9afjiwNub6yt0h9", createdByUsername = "matt_damon", createdOn = LocalDateTime.now().minusHours(7)))
+            create(GabbleDto(text = "Gabble 1 from user matt_damon at @johan_vergeer", createdById = "00ugl9afjiwNub6yt0h9", createdByUsername = "matt_damon", createdOn = LocalDateTime.now().minusHours(7)))
             create(GabbleDto(text = "Gabble 2 from user matt_damon", createdById = "00ugl9afjiwNub6yt0h9", createdByUsername = "matt_damon", createdOn = LocalDateTime.now().minusHours(18)))
             create(GabbleDto(text = "Gabble 1 from user frank_coenen", createdById = "00ugl9afjiwNub6yth10", createdByUsername = "frank_coenen", createdOn = LocalDateTime.now().minusHours(19)))
             create(GabbleDto(text = "Gabble 2 from user frank_coenen", createdById = "00ugl9afjiwNub6yth10", createdByUsername = "frank_coenen", createdOn = LocalDateTime.now().minusHours(21)))
@@ -46,7 +46,11 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
         return toSave
     }
 
-    override fun findAllGabbleTags(): Set<String> = this.gabbles.flatMap { gabble -> gabble.tags }.toSet()
+    override fun findAllGabbleTags(): Set<String> =
+        this.gabbles.flatMap { gabble -> gabble.tags }.toSet()
+
+    override fun findMentionedInForUser(userId: String) =
+        this.gabbles.filter { gabble -> gabble.mentions.contains(userId) }.toSet()
 
     private fun GabbleDto.extractTags(): GabbleDto {
         val tags = this.text.split(" ")

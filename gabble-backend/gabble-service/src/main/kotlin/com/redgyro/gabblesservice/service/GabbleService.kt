@@ -8,4 +8,6 @@ interface GabbleService {
     suspend fun create(gabbleDto: GabbleDto): GabbleDto
 
     fun findAllGabbleTags(): Set<String>
+
+    fun findMentionedInForUser(userId: String): Set<GabbleDto>
 }
