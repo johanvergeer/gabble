@@ -3,6 +3,7 @@ import {Profile} from "./profile.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {map} from "rxjs/operators";
+import {GabblesService} from "../gabbles/gabbles.service";
 
 @Injectable()
 export class ProfileService implements OnInit {
@@ -12,7 +13,7 @@ export class ProfileService implements OnInit {
   loggedInUserProfileChanged = new Subject<Profile>();
   notFollowingChanged = new Subject<Profile[]>();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private gabblesService: GabblesService) {
   }
 
   ngOnInit(): void {
@@ -27,13 +28,13 @@ export class ProfileService implements OnInit {
   findFollowingById(userId: string): Observable<Profile[]> {
     return this.httpClient
       .get<Profile[]>(`http://localhost:8090/user-profiles/${userId}/following/`)
-      .pipe(map( res => res.map(profile => new Profile(profile))))
+      .pipe(map(res => res.map(profile => new Profile(profile))))
   }
 
   findFollowersById(userId: string): Observable<Profile[]> {
     return this.httpClient
       .get<Profile[]>(`http://localhost:8090/user-profiles/${userId}/followers/`)
-      .pipe(map( res => res.map(profile => new Profile(profile))))
+      .pipe(map(res => res.map(profile => new Profile(profile))))
   }
 
   findForLoggedInUser(): Profile {
@@ -66,6 +67,8 @@ export class ProfileService implements OnInit {
         },
         () => {
           console.log("The PUT observable is now completed.");
+          this.gabblesService.updateMentionedIn(this.loggedInUserProfile.userId);
+          this.gabblesService.updateGabblesForLoggedInUser(this.loggedInUserProfile.userId);
         });
 
     this.httpClient

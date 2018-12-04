@@ -88,7 +88,8 @@ export class GabblesService implements OnInit {
       .get<Gabble[]>(`http://localhost:8080/${userId}/mentions`)
       .subscribe((response) => {
           this.mentions = response;
-          this.mentionsUpdated.next(this.mentions.slice())
+          this.mentionsUpdated.next(this.mentions.slice());
+          console.log("mentions =>", this.mentions)
         }
       )
   }

@@ -5,7 +5,7 @@ import com.redgyro.dto.gabbles.GabbleDto
 import com.redgyro.dto.userprofiles.UserProfileDto
 import com.redgyro.gabblesservice.events.UserProfileUpdateEvent
 import com.redgyro.gabblesservice.randomUUID
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
 class InMemoryGabbleService @Inject constructor(private val userProfileService: UserProfileService) : GabbleService {

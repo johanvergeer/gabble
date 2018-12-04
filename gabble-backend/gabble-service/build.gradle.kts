@@ -42,5 +42,3 @@ dependencies {
 
     compile(project(":gabble-backend:gabble-models"))
 }
-
-kotlin.experimental.coroutines = Coroutines.ENABLE

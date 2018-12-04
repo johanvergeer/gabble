@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.2.71"
+    kotlin("jvm") version "1.3.10"
     base
 }
 
@@ -17,6 +17,11 @@ tasks.withType<KotlinCompile> {
 }
 
 subprojects {
+    repositories {
+        jcenter()
+        maven(url = "https://kotlin.bintray.com/kotlinx")
+    }
+
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }
