@@ -12,7 +12,6 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
 
     private val gabbles = mutableSetOf<GabbleDto>()
     private val userProfilesToUserId = mutableMapOf<String, UserProfileDto>()
-    private val userProfilesToUsername = mutableMapOf<String, UserProfileDto>()
 
     init {
         runBlocking {
@@ -72,12 +71,11 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
             .filter { it -> it.startsWith("@") }
             .map { username -> username.drop(1) }
             .map { username ->
-                val userProfileFromMap = userProfilesToUsername[username]
+                val userProfileFromMap = userProfilesToUserId.values.find { it.username == username }
 
                 if (userProfileFromMap == null) {
                     val userProfile = userProfileService.findByUsername(username)
                     userProfilesToUserId[userProfile.userId] = userProfile
-                    userProfilesToUsername[userProfile.username] = userProfile
                     userProfile.userId
                 } else
                     userProfileFromMap.userId
@@ -88,6 +86,25 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
     }
 
     override fun changeMentionedUsername(userId: String, newUserName: String) {
-        println("New username $newUserName for user with id $userId")
+        val currentUserProfileDto = userProfilesToUserId[userId]
+
+        if (currentUserProfileDto != null) {
+            val currentUsername = currentUserProfileDto.username
+            println("New username $newUserName for user with id $userId and old username $currentUsername")
+
+            gabbles
+                .filter { it.mentions.contains(userId) }
+                .forEachIndexed { _, gabbleDto ->
+                    val newGabbleDto = gabbleDto.copy(
+                        text = gabbleDto.text.replace("@$currentUsername", "@$newUserName")
+                    )
+
+                    gabbles.remove(gabbleDto)
+                    gabbles.add(newGabbleDto)
+                }
+
+            val newUserProfile = currentUserProfileDto.copy(username = newUserName)
+            userProfilesToUserId[userId] = newUserProfile
+        }
     }
 }

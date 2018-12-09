@@ -3,7 +3,7 @@ spring:
     pub-sub-domain: true # specifies that the default destination is a topic.
 
   jpa:
-    show-sql: true
+    show-sql: false
   application:
     name: user-profiles-service
 server:
