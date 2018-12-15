@@ -52,7 +52,7 @@ class StartUpRunner(private val userProfileService: UserProfileService, private 
                 website = "https://facebook.com/fc"
             ))
             var user5 = userProfileService.createNewUserProfile(UserProfile(
-                userId = "00ugl9afjiwNub6yth11",
+                userId = "00ui6hbyu7lzJUY9K0h7",
                 username = "matthew_murdock",
                 bio = "Dit is de biografie van MM",
                 location = "Hell's Kitchen, NY",

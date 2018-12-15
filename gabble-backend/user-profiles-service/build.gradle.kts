@@ -21,6 +21,7 @@ dependencies {
     springBootStarter("data-jpa")
     springBootStarter("security")
     springBootStarter("web")
+    springBootStarter("hateoas")
 
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion")
 

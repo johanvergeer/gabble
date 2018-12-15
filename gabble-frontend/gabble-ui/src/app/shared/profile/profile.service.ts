@@ -50,6 +50,7 @@ export class ProfileService implements OnInit {
       .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
       .subscribe((response) => {
         this.loggedInUserProfile = new Profile(response);
+        console.log(this.loggedInUserProfile);
         this.loggedInUserProfileChanged.next(this.loggedInUserProfile);
       })
   }

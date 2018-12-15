@@ -3,6 +3,7 @@ package com.redgyro.services
 import com.redgyro.dto.userprofiles.UserProfileDto
 import com.redgyro.events.UserProfileUpdateEventPublisher
 import com.redgyro.models.UserProfile
+import com.redgyro.models.UserProfileHateosDto
 import com.redgyro.repositories.UserProfileRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -21,12 +22,12 @@ class UserProfileService(
 
     fun findAllUserProfiles() = userProfileRepository.findAll().toList()
 
-    fun findUserById(userId: String): UserProfileDto = userProfileRepository
+    fun findUserById(userId: String) = userProfileRepository
         .findById(userId)
         .orElseThrow { UserProfileNotFoundException(userId) }
         .toDto()
 
-    fun findUserByUsername(username: String): UserProfileDto = userProfileRepository
+    fun findUserByUsername(username: String) = userProfileRepository
         .findByUsername(username)
         .orElseThrow { UserProfileNotFoundException(username) }
         .toDto()
@@ -37,12 +38,12 @@ class UserProfileService(
         return userProfileRepository.save(userProfile)
     }
 
-    fun findNotFollowing(userId: String): Set<UserProfileDto> = userProfileRepository
+    fun findNotFollowing(userId: String) = userProfileRepository
         .findNotFollowing(userProfileRepository.findById(userId).get())
         .map { it.toDto() }
         .toSet()
 
-    fun followUser(followerId: String, followingId: String): Set<UserProfileDto> {
+    fun followUser(followerId: String, followingId: String): Set<UserProfileHateosDto> {
         val follower = userProfileRepository.findById(followerId).orElseThrow { UserProfileNotFoundException(followerId) }
         val following = userProfileRepository.findById(followingId).orElseThrow { UserProfileNotFoundException(followingId) }
 
@@ -54,7 +55,7 @@ class UserProfileService(
         return findNotFollowing(followingId)
     }
 
-    fun saveUserProfile(userProfile: UserProfile): UserProfileDto {
+    fun saveUserProfile(userProfile: UserProfile): UserProfileHateosDto {
         // Find current user profile so we also have all relations
         val currentProfile = this.userProfileRepository
             .findById(userProfile.userId)
@@ -77,13 +78,13 @@ class UserProfileService(
         return savedProfileDto
     }
 
-    fun findUserFollowing(userId: String): Collection<UserProfileDto> = this.userProfileRepository
+    fun findUserFollowing(userId: String) = this.userProfileRepository
         .findById(userId)
         .orElseThrow { UserProfileNotFoundException(userId) }
         .following
         .map { it.toDto() }
 
-    fun findUserFollowers(userId: String): Collection<UserProfileDto> = this.userProfileRepository
+    fun findUserFollowers(userId: String) = this.userProfileRepository
         .findById(userId)
         .orElseThrow { UserProfileNotFoundException(userId) }
         .followers
