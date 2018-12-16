@@ -30,8 +30,11 @@ export class MentionsPageComponent implements OnInit {
 
       this.gabblesService.startGabblesSession(userId);
 
-      this.gabblesService.subscribeToMentionedInSocket(userId);
-      this.gabblesService.mentionsSubject.subscribe(msg => console.log(msg));
+      this.gabblesService.subscribeToMentionedInSocket();
+      this.gabblesService.mentionsSubject.subscribe(msg => {
+        console.log(msg);
+        this.gabbles.push(msg)
+      });
 
       this.localStorageService.store('key', 'value');
       this.sessionStorageService.store('sessionKey', 'value');

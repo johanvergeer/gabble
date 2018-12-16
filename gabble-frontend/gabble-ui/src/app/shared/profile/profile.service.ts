@@ -50,7 +50,7 @@ export class ProfileService implements OnInit {
       .get<Profile>(`http://localhost:8090/user-profiles/profile/`)
       .subscribe((response) => {
         this.loggedInUserProfile = new Profile(response);
-        console.log(this.loggedInUserProfile);
+        // console.log(this.loggedInUserProfile);
         this.loggedInUserProfileChanged.next(this.loggedInUserProfile);
       })
   }
@@ -59,15 +59,15 @@ export class ProfileService implements OnInit {
     this.httpClient.put(`http://localhost:8090/user-profiles/profile/`, profile)
       .subscribe(
         (val) => {
-          console.log("PUT call successful value returned in body", val);
+          // console.log("PUT call successful value returned in body", val);
           this.updateLoggedInUser();
           this.updateNotFollowing()
         },
         response => {
-          console.log("PUT call in error", response);
+          // console.log("PUT call in error", response);
         },
         () => {
-          console.log("The PUT observable is now completed.");
+          // console.log("The PUT observable is now completed.");
           this.gabblesService.updateMentionedIn(this.loggedInUserProfile.userId);
           this.gabblesService.updateGabblesForLoggedInUser(this.loggedInUserProfile.userId);
         });
@@ -98,20 +98,20 @@ export class ProfileService implements OnInit {
   }
 
   followUser(userProfile: Profile) {
-    console.log(`userProfile.id = `, userProfile.userId);
+    // console.log(`userProfile.id = `, userProfile.userId);
 
     this.httpClient.post(`http://localhost:8090/user-profiles/profile/following/`, {'userId': userProfile.userId})
       .subscribe(
         (val) => {
-          console.log("POST call successful value returned in body", val);
+          // console.log("POST call successful value returned in body", val);
           this.updateLoggedInUser();
           this.updateNotFollowing()
         },
         response => {
-          console.log("POST call in error", response);
+          // console.log("POST call in error", response);
         },
         () => {
-          console.log("The POST observable is now completed.");
+          // console.log("The POST observable is now completed.");
         });
   }
 }

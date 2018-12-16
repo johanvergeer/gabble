@@ -102,15 +102,14 @@ export class GabblesService implements OnInit {
     }
   }
 
-  subscribeToMentionedInSocket(userId: string) {
+  subscribeToMentionedInSocket() {
     this.mentionsSubject = <Subject<Gabble>> this.webSocketService
       .connect(`ws://localhost:8080/mentions`)
       .map((response: MessageEvent) => {
-        console.log(`Raw data received => ${response.data}`);
+        // console.log(`Raw data received => ${response.data}`);
         const data = JSON.parse(response.data);
-        console.log(`Received data from websocket => ${data}`);
         return <Gabble>data;
-      })
+      });
   }
 
   updateMentionedIn(userId: string) {
@@ -121,7 +120,7 @@ export class GabblesService implements OnInit {
           this.mentionsUpdated.next(this.mentions.slice());
           console.log("mentions =>", this.mentions)
         }
-      )
+      );
   }
 
   create(text: string, userId: string, username: string) {
