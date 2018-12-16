@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GabblesService} from "../shared/gabbles/gabbles.service";
 import {OktaAuthService} from "@okta/okta-angular";
 import {Gabble} from "../shared/gabbles/gabble.model";
+import {LocalStorageService, SessionStorageService} from "ngx-webstorage";
 
 @Component({
   selector: 'app-mentions-page',
@@ -11,7 +12,11 @@ import {Gabble} from "../shared/gabbles/gabble.model";
 export class MentionsPageComponent implements OnInit {
   gabbles: Gabble[];
 
-  constructor(private gabblesService: GabblesService, private oktaAuth: OktaAuthService) {
+  constructor(
+    private gabblesService: GabblesService,
+    private oktaAuth: OktaAuthService,
+    private localStorageService: LocalStorageService,
+    private  sessionStorageService: SessionStorageService) {
   }
 
   ngOnInit() {
@@ -20,7 +25,18 @@ export class MentionsPageComponent implements OnInit {
       this.gabblesService.mentionsUpdated.subscribe(gabbles => {
         this.gabbles = gabbles;
       });
+
+      const userId = user.sub;
+
+      this.gabblesService.startGabblesSession(userId);
+
+      this.gabblesService.subscribeToMentionedInSocket(userId);
+      this.gabblesService.mentionsSubject.subscribe(msg => console.log(msg));
+
+      this.localStorageService.store('key', 'value');
+      this.sessionStorageService.store('sessionKey', 'value');
     });
+
   }
 
 }

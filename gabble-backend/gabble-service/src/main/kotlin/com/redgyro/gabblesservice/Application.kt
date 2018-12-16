@@ -17,6 +17,9 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
+import io.ktor.sessions.Sessions
+import io.ktor.sessions.cookie
+import io.ktor.websocket.WebSockets
 import java.time.LocalDateTime
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -24,8 +27,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    Guice.createInjector(
-        MainModule(this)   )
 
     install(CORS) {
         method(HttpMethod.Options)
@@ -52,8 +53,19 @@ fun Application.module(testing: Boolean = false) {
         exception<AuthenticationException> { call.respond(HttpStatusCode.Unauthorized) }
         exception<AuthorizationException> { call.respond(HttpStatusCode.Forbidden) }
     }
+
+    install(WebSockets) {
+
+    }
+
+    install(Sessions) {
+        cookie<GabbleSession>("GABBLE_SESSION")
+        cookie<OktaOAuthNonceSession>(name = "sessionkey")
+    }
+
+    Guice.createInjector(MainModule(this))
 }
 
+data class GabbleSession(val userId: String)
 
-
-
+data class OktaOAuthNonceSession(val value: String)

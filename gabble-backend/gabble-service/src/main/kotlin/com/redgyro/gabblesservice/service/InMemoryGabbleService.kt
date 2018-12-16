@@ -3,6 +3,7 @@ package com.redgyro.gabblesservice.service
 import com.google.inject.Inject
 import com.redgyro.dto.gabbles.GabbleDto
 import com.redgyro.dto.userprofiles.UserProfileDto
+import com.redgyro.gabblesservice.events.GabbleCreateEvent
 import com.redgyro.gabblesservice.events.UserProfileUpdateEvent
 import com.redgyro.gabblesservice.randomUUID
 import kotlinx.coroutines.runBlocking
@@ -25,7 +26,7 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
             create(GabbleDto(text = "Gabble 1 from user frank_coenen", createdById = "00ugl9afjiwNub6yth10", createdByUsername = "frank_coenen", createdOn = LocalDateTime.now().minusHours(19)))
             create(GabbleDto(text = "Gabble 2 from user frank_coenen", createdById = "00ugl9afjiwNub6yth10", createdByUsername = "frank_coenen", createdOn = LocalDateTime.now().minusHours(21)))
             create(GabbleDto(text = "Gabble 3 from user frank_coenen", createdById = "00ugl9afjiwNub6yth10", createdByUsername = "frank_coenen", createdOn = LocalDateTime.now().minusHours(35)))
-            create(GabbleDto(text = "Gabble 1 from user matthew_murdock", createdById = "00ugl9afjiwNub6yth11", createdByUsername = "matthew_murdock", createdOn = LocalDateTime.now().minusHours(41)))
+            create(GabbleDto(text = "Gabble 1 from user matthew_murdock", createdById = "00ui6hbyu7lzJUY9K0h7", createdByUsername = "matthew_murdock", createdOn = LocalDateTime.now().minusHours(41)))
         }
 
         UserProfileUpdateEvent on { changeMentionedUsername(it.userProfileDto.userId, it.userProfileDto.username) }
@@ -48,6 +49,7 @@ class InMemoryGabbleService @Inject constructor(private val userProfileService: 
                 .extractMentions()
 
         this.gabbles.add(toSave)
+        GabbleCreateEvent(toSave).emit()
 
         return toSave
     }

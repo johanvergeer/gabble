@@ -1,14 +1,16 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Gabble} from "./gabble.model";
 import {Observable, Subject} from "rxjs";
-import {Profile} from "../profile/profile.model";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {OktaAuthService} from "@okta/okta-angular";
+import {WebSocketService} from "../websocket.service";
 
 @Injectable()
 export class GabblesService implements OnInit {
-  loggedInUserId: string;
+  gabblesMentionedIn: string;
+
+  mentionsSubject: Subject<Gabble>;
 
   gabblesForLoggedInUser: Gabble[];
   gabblesForLoggedInUserChanged = new Subject<Gabble[]>();
@@ -22,7 +24,10 @@ export class GabblesService implements OnInit {
   mentions: Gabble[];
   mentionsUpdated = new Subject<Gabble[]>();
 
-  constructor(private httpClient: HttpClient, private oktaAuth: OktaAuthService) {
+  constructor(
+    private httpClient: HttpClient,
+    private oktaAuth: OktaAuthService,
+    private webSocketService: WebSocketService) {
     console.log(oktaAuth.getUser())
   }
 
@@ -36,6 +41,20 @@ export class GabblesService implements OnInit {
     } else {
       this.updateGabblesForLoggedInUser(userId)
     }
+  }
+
+  startGabblesSession(userId: string) {
+    this.httpClient.post(`http://localhost:8080/users/sessions/${userId}`, {})
+      .subscribe(
+        (val) => {
+          console.log("Session cookie created");
+        },
+        response => {
+          console.log("Session cookie not created", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
   }
 
   findByUserId(userId: string): Observable<Gabble[]> {
@@ -81,6 +100,17 @@ export class GabblesService implements OnInit {
     } else {
       this.updateMentionedIn(userId)
     }
+  }
+
+  subscribeToMentionedInSocket(userId: string) {
+    this.mentionsSubject = <Subject<Gabble>> this.webSocketService
+      .connect(`ws://localhost:8080/mentions`)
+      .map((response: MessageEvent) => {
+        console.log(`Raw data received => ${response.data}`);
+        const data = JSON.parse(response.data);
+        console.log(`Received data from websocket => ${data}`);
+        return <Gabble>data;
+      })
   }
 
   updateMentionedIn(userId: string) {

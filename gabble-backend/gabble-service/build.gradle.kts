@@ -33,6 +33,7 @@ dependencies {
     compile("io.ktor:ktor-server-core:$ktor_version")
     compile("io.ktor:ktor-server-host-common:$ktor_version")
     compile("io.ktor:ktor-server-netty:$ktor_version")
+    compile("io.ktor:ktor-websockets:$ktor_version")
 
     compile("com.google.code.gson:gson:2.8.5")
     compile("com.google.inject:guice:4.2.2")

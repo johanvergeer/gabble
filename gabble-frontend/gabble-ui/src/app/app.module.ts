@@ -44,6 +44,7 @@ import {ProfileGabblesComponent} from './profile/profile-gabbles/profile-gabbles
 import {registerLocaleData} from "@angular/common";
 import localeNl from '@angular/common/locales/nl';
 import { GabbleComponent } from './gabble/gabble.component';
+import {NgxWebstorageModule} from "ngx-webstorage";
 
 const appRoutes: Routes = [
   {
@@ -107,6 +108,7 @@ registerLocaleData(localeNl, 'nl-NL');
   ],
   imports: [
     BrowserModule,
+    NgxWebstorageModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
